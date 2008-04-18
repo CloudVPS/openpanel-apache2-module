@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dict>
+        <string id="httpd-dumpvhosts">httpd -S</string>
+        <string id="httpd-modules">httpd -l</string>
+        <string id="httpd-directives">httpd -L</string>
+</dict>

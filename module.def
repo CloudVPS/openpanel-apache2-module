@@ -1,0 +1,79 @@
+# ============================================================================
+# OpenPanel Apache2.module for virtual website hosting
+# Copyright (C) 2008 PanelSix V.O.F.
+# ============================================================================
+module Apache2.module			< uuid d16089e4-3966-44c0-8b53-03e3fea129a6
+								< version 1
+								< languages en_EN
+								< apitype xml
+								
+
+# ============================================================================
+# CLASSES
+# ============================================================================
+class Domain:Vhost				< uuid 59417a58-d793-4ec7-a909-a9acb0236971
+								< version 1
+								< requires Domain
+								< indexing manual
+								< parentrealm domainsuffix
+								< uniquein class
+								< shortname vhost
+								< title Website
+								< description Virtual host configuration
+								< explanation vhost.html
+								
+								< capabilities create update delete
+								
+	string id					: Hostname-part of the site url
+								< example www.example.net
+								< tooltip The fully qualified host name part of your website url, like 'www.example.net'
+								< gridwidth 62
+	
+	string admin				: Email address of site admin
+								< example webmaster@example.net
+								< flags enabled visible
+								< tooltip Email address for the website administrator (webmaster)
+								< gridhide true
+	
+	bool mod_php				: PHP module
+								< default true
+								< tooltip Select to enable mod_php
+								< gridwidth 12
+	
+	bool mod_cgi				: CGI module
+								< default false
+								< tooltip Select to enable the running of CGI scripts.
+								< gridwidth 12
+	
+	bool mod_perl				: Perl module
+								< default false
+								< tooltip Select to enable mod_perl.
+								< gridwidth 12
+
+
+# ============================================================================
+# AUTHD
+# ============================================================================
+authd fileops
+	match *.conf				: /etc/%%SERVICENAME%%/openpanel.d
+								< user root
+								< group root
+								< perms 0644
+								
+	match *						: /etc/%%SERVICENAME%%/openpanel.d/*
+								< user root
+								< group root
+								< perms 0644
+
+# ----------------------------------------------------------------------------
+authd services
+	service %%SERVICENAME%%
+
+# ============================================================================
+# DISTRO MACROS
+# ============================================================================
+distro debian
+	macro SERVICENAME			: apache2
+
+distro redhat
+	macro SERVICENAME			: httpd

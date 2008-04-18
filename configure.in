@@ -1,0 +1,7 @@
+cxx
+grace
+pthread
+libsocket
+unixflavor
+libcrypt
+libdl

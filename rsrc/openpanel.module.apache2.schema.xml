@@ -1,0 +1,32 @@
+<xml.schema>
+
+	<xml.class name="openpanel.module.domain">
+		<xml.type>dict</xml.type>
+		<xml.proplist>
+			<xml.member class="config"	id="config"/>
+		</xml.proplist>
+	</xml.class>
+
+	<xml.class name="config">
+		<xml.type>dict</xml.type>
+		<xml.proplist>
+			<xml.member class="varpath" 		id="varpath"/>
+			<xml.member class="htservice:vhosts_dir" id="htservice:vhosts_dir"/>
+			<xml.member class="htservice:name"		 id="htservice:name"/>
+		</xml.proplist>
+	</xml.class>
+
+	<xml.class name="varpath">
+		<xml.type>string</xml.type>
+	</xml.class>
+	
+	<xml.class name="htservice:vhosts_dir">
+		<xml.type>string</xml.type>
+	</xml.class>
+	
+	<xml.class name="htservice:name">
+		<xml.type>string</xml.type>
+	</xml.class>
+
+	
+</xml.schema>

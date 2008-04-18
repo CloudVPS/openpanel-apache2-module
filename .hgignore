@@ -1,0 +1,6 @@
+syntax: glob
+apache2module.app
+*.o
+makeinclude
+platform.h
+configure.paths

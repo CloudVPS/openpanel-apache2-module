@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+  <name>Website</name>
+  <description>A basic website</description>
+  <longdesc>A basic hosted website and domain with no features</longdesc>
+  <context/>
+  <parameters>
+    <p id="domainname" type="string">Domain name</p>
+    <p id="unixaccount" type="string">Unix account name (for SSH)</p>
+  </parameters>
+  <layout>
+    <opt id="domainname" enabled visible required
+    					 regexp=""
+    					 example="foobar.com"/>
+    <opt id="unixaccount" enabled visible required
+    					  regexp="" example=""/>
+  </layout>
+  <objects>
+    <object id="$domainname$" class="DNSDomain">
+      <members>
+        <integer id="ttl">7200</integer>
+      </members>
+      <children>
+        <object class="DNSDomain:Record">
+          <members>
+            <string id="name">www</string>
+            <string id="type">A</string>
+            <string id="addressval">10.90.90.1</string>
+          </members>
+        </object>
+      </children>
+    </object>
+    <object id="www.$domainname$" class="Domain:Vhost">
+      <members>
+        <string id="admin">webmaster@$domainname$</string>
+      </members>
+    </object>
+  </objects>
+</template>

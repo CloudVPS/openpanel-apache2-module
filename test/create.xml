@@ -1,0 +1,34 @@
+1239
+<?xml version="1.0" encoding="UTF-8"?>
+<dict>
+		<string id="OpenCORE:Context">Domain:Vhost</string>
+		<dict id="OpenCORE:Session">
+				<string id="sessionid">2b80db97-73c4-47d3-4ae6-e3c87da613e3</string>
+				<string id="classid">Domain:Vhost</string>
+				<string id="objectid">4e52cdb7-8a29-4b43-2978-cd3676ad3f6e</string>
+		</dict>
+		<dict id="Domain:Vhost" type="object">
+				<string id="admin">webmaster@pukkelkont.nl</string>
+				<string id="subdomain">www</string>
+				<integer id="mod_php">1</integer>
+				<integer id="mod_cgi">1</integer>
+				<integer id="mod_perl">1</integer>
+				<string id="uuid">4e52cdb7-8a29-4b43-2978-cd3676ad3f6e</string>
+				<string id="id">4e52cdb7-8a29-4b43-2978-cd3676ad3f6e</string>
+		</dict>
+		<dict id="Domain" type="object">
+				<string id="password">peop</string>
+				<string id="uuid">30d71337-035f-44af-0714-721c4e4bb58f</string>
+				<string id="id">pukkelkont.com</string>
+				<string id="metaid">pukkelkont.com</string>
+		</dict>
+		<string id="OpenCORE:Command">create</string>
+</dict>
+
+<?xml version="1.0" encoding="UTF-8"?>
+<openpanel.module.apache2>
+		<dict id="OpenCORE:Result">
+				<integer id="code">1000</integer>
+				<string id="message">OK</string>
+		</dict>
+</openpanel.module.apache2>

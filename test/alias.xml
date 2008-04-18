@@ -1,0 +1,36 @@
+1186
+<openpanel.module.mysql>
+
+	<string id="OpenCORE:Command">create</string>
+	<dict id="OpenCORE:Session">
+		<string id="classid">Vhost:Alias</string>
+		<string id="objectid">www.another.org</string>
+	</dict>
+	<dict id="User">
+		<string id="id">pi@madscience.nl</string>
+	</dict>
+	<dict id="Domain" type="object">
+		<string id="password">peop</string>                
+		<string id="uuid">30d71337-035f-44af-0714-721c4e4bb58f</string>
+		<string id="id">pukkelkont.com</string>
+		<string id="metaid">pukkelkont.com</string>
+		<string id="homedir">/home/danny</string>
+	</dict>                 	
+	<dict id="Domain:Vhost">
+		<string id="admin">webmaster@pukkelkont.nl</string>
+		<string id="subdomain">www</string>
+		<integer id="mod_php">1</integer>
+		<integer id="mod_cgi">1</integer>
+		<integer id="mod_perl">1</integer>
+		<string id="uuid">4e52cdb7-8a29-4b43-2978-cd3676ad3f6e</string>
+		<string id="id">4e52cdb7-8a29-4b43-2978-cd3676ad3f6e</string>		
+	</dict>
+	<dict id="Vhost:Alias">
+		<string id="id">www.another.org</string>		
+	</dict>	
+	<dict id="Vhost:AwStats" type="object">
+		<string id="id">someuid</string>
+		<string id="uri">awstats</string>
+	</dict>
+	
+</openpanel.module.mysql>

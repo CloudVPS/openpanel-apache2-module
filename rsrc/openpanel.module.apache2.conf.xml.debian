@@ -1,0 +1,9 @@
+<openpanel.module.domain>
+
+	<config>
+		<varpath>/var/opencore/conf/staging/Apache2/</varpath>
+		<htservice:vhosts_dir>/etc/apache2/openpanel.d/</htservice:vhosts_dir>
+		<htservice:name>apache2</htservice:name>
+	</config>
+	
+</openpanel.module.domain>
