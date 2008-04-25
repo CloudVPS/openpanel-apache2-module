@@ -206,7 +206,7 @@ bool apache2Module::writevhost 		 (value &v)
 	if (f.openwrite (fname))
 	{
 		f.printf ("<VirtualHost *:80>\n");
-		if (vhost["admin"].sval().strlen()) f.printf ("   ServerAdmin        %s\n", vhost["admin"].cval());
+		if (vhost["admin"].sval().strlen()) f.printf ("   ServerAdmin        \"%S\"\n", vhost["admin"].cval());
 		f.printf ("   DocumentRoot       %s/web/%s%s\n", 
 				  homedir.cval(),
 				  subdom.cval(),
