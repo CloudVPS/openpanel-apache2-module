@@ -211,13 +211,15 @@ bool apache2Module::writevhost 		 (value &v)
 				  homedir.cval(),
 				  subdom.cval(),
 				  v["Domain"]["id"].cval());
-		
+
 		f.printf ("   ServerName         %s%s\n", 
 				  subdom.cval(),
 				  v["Domain"]["id"].cval());
 				  
-
-		
+		if (subdom == "www")
+		{
+			f.printf ("   ServerAlias        %s\n", v["Domain"]["id"].cval());
+		}
 	
 		// handle aliasdomains
 		foreach(aliasdoms, data["Domain"]["Domain:Alias"])
@@ -225,6 +227,11 @@ bool apache2Module::writevhost 		 (value &v)
 			f.printf ("   ServerAlias         %s%s\n", 
 				      subdom.cval(),
 				      aliasdoms["id"].cval());
+			
+			if (subdom == "www")
+			{
+				f.printf ("   ServerAlias        %s\n", aliasdoms["id"].cval());
+			}
 		}
 
 		if (vhost["mod_perl"] == "true")
