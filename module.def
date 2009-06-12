@@ -11,18 +11,39 @@ module Apache2					< uuid d16089e4-3966-44c0-8b53-03e3fea129a6
 # ============================================================================
 # CLASSES
 # ============================================================================
-class Domain:Vhost				< uuid 59417a58-d793-4ec7-a909-a9acb0236971
+class Meta:Website				< uuid 1b94ce81-7a44-42b1-8b85-c61630e66e8a
 								< version 1
+								< requires Domain
+								< indexing manual
+								< parentrealm domainsuffix
+								< shortname website
+								< title Website
+								< description Website
+								
+								< metatype base
+								
+	string id					: Site domain < gridwidth 40
+	string type					: Type < gridwidth 15
+	string description			: Information < gridwidth 40
+	
+
+# ----------------------------------------------------------------------------
+class Domain:Vhost				< uuid 59417a58-d793-4ec7-a909-a9acb0236971
+								< version 2
 								< requires Domain
 								< indexing manual
 								< parentrealm domainsuffix
 								< uniquein class
 								< shortname vhost
-								< title Website
+								< title Virtual Host
 								< description Virtual host configuration
 								< explanation vhost.html
 								
 								< capabilities create update delete
+								
+								< metatype derived
+								< metabase Meta:Website
+								< metadescription vhost php:$mod_php$ cgi:$mod_cgi$ perl:$mod_perl$
 								
 	string id					: Hostname-part of the site url
 								< example www.example.net
