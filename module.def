@@ -22,9 +22,9 @@ class Meta:Website				< uuid 1b94ce81-7a44-42b1-8b85-c61630e66e8a
 								
 								< metatype base
 								
-	string id					: Site domain < gridwidth 40
-	string type					: Type < gridwidth 15
-	string description			: Information < gridwidth 40
+	string id					: Site domain < gridwidth 33
+	string type					: Type < gridwidth 12
+	string description			: Information < gridwidth 50
 	
 
 # ----------------------------------------------------------------------------
@@ -43,7 +43,7 @@ class Domain:Vhost				< uuid 59417a58-d793-4ec7-a909-a9acb0236971
 								
 								< metatype derived
 								< metabase Meta:Website
-								< metadescription vhost php:$mod_php$ cgi:$mod_cgi$ perl:$mod_perl$
+								< metadescription $?mod_php:php:$ $?mod_cgi:cgi:$ $?mod_perl:perl:$
 								
 	string id					: Hostname-part of the site url
 								< example www.example.net
