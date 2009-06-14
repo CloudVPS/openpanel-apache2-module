@@ -109,6 +109,19 @@ int apache2Module::main (void)
 			break;
 
 		incaseof ("getconfig") :
+			sendresult (moderr::ok, "OK",
+				$("System:ApachePrefs",
+					$attr("type","class") ->
+					$("apache",
+						$attr("type", "object") ->
+						$attr("parent", "prefs") ->
+						$attr("parentclass", "OpenCORE:Prefs") ->
+						$("keepalive",false)->
+						$("keepalivetime",60)->
+						$("maxclients",200)->
+						$("maxrequests",1000)
+					 )
+				 ));
 			sendresult (moderr::err_command, 
 						"Not yet implemented");			
 
@@ -503,45 +516,37 @@ bool apache2Module::checkconfig (value &v)
 	// We only check if the body data is correct and do not any 
 	// xml validation checks
 	
-	if (v["OpenCORE:Session"]["classid"] == "Domain:Vhost")
+	string classid = v["OpenCORE:Session"]["classid"];
+	
+	caseselector (classid)
 	{
-		// Loop through each vhost to check if all fields exists 
-		// with usable data
-		if (v.exists("Domain"))
-		{
-			if (v.exists("Domain:Vhost"))
+		incaseof ("Domain:Vhost") :
+			if (v.exists("Domain"))
 			{
-				string username = v["Domain:Vhost"]("owner");
-				if (! username)
+				if (v.exists("Domain:Vhost"))
 				{
-					sendresult (moderr::err_value, "Object has no owner");
-					return false;
+					string username = v["Domain:Vhost"]("owner");
+					if (! username)
+					{
+						sendresult (moderr::err_value, "Object has no owner");
+						return false;
+					}
+					
 				}
-				
 			}
-		}
-		else
-		{
 			sendresult (moderr::err_context, 
 						"Context body does not exists");	
-			return false;				
-		}
-	}
-	else if (v["OpenCORE:Session"]["classid"] == "Vhost:Alias")
-	{
-		// TODO: Any request checks over here
-
-		return true;	
-	}
-	else
-	{
-		sendresult (moderr::err_context, 
-				"Context not supported");
-		return false;
+			return false;
+			
+		incaseof ("VHost:Alias") : return true;
+		incaseof ("System:ApachePrefs") : return true;
+		defaultcase :
+			sendresult (moderr::err_context, "Context not supported");
+			return false;
 	}
 	
-	// Everything seems to be okay
-	return true;
+	// unreachable
+	return false;
 }
 
 // =========================================================================
