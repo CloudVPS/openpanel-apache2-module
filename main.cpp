@@ -189,7 +189,7 @@ void apache2Module::getconfig (void)
 					 )->
 					$("System:PHPPrefs",
 						$attr("type","class") ->
-						$("php", phpp
+						$("php", phpp)
 					 ));
 }
 
