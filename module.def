@@ -147,6 +147,11 @@ authd fileops
 								< group root
 								< perms 0644
 								
+	match php.ini				: %%PHPINIPATH%%
+								< user root
+								< group root
+								< perms 0644
+								
 	match *.conf				: /etc/%%SERVICENAME%%/openpanel.d
 								< user root
 								< group root
@@ -167,7 +172,9 @@ authd services
 distro debian
 	macro SERVICENAME			: apache2
 	macro CONFPATH				: /etc/apache2
+	macro PHPINIPATH			: /etc/php4/apache2
 
 distro redhat
 	macro SERVICENAME			: httpd
 	macro CONFPATH				: /etc/httpd/conf
+	macro PHPINIPATH			: /etc

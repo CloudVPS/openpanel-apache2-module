@@ -90,6 +90,18 @@ int apache2Module::main (void)
 					return 0;
 			}
 			break;
+			
+		incaseof ("System:PHPPrefs") :
+			caseselector (command)
+			{
+				incaseof ("update") :
+					if (! apache2Module::writephpini (data)) return 0;
+					break;
+					
+				defaultcase :
+					sendresult (moderr::err_command, "Not supported");
+					return 0;
+			}
 
 		defaultcase :
 			if (command == "getconfig")
@@ -193,6 +205,79 @@ void apache2Module::getconfig (void)
 					 ));
 }
 
+bool apache2Module::writephpini (const value &data)
+{
+	const value &o = data["System:PHPPrefs"];
+	string inifn = conf["config"]["phpini"];
+	string inipath = inifn.cutatlast ('/');
+	string tmpini = "/var/opencore/conf/staging/Apache2/%s" %format (inifn);
+	
+	string in = fs.load (conf["config"]["phpini"]);
+	value lines = strutil::splitlines (in);
+	foreach (line, lines)
+	{
+		const string &li = line.sval();
+		if (li.strncmp ("output_buffering") == 0)
+		{
+			if (o["outputbuffering"])
+			{
+				line = "output_buffering = On";
+			}
+			else
+			{
+				line = "output_buffering = Off";
+			}
+		}
+		else if (li.strncmp ("zlib.output_compression") == 0)
+		{
+			if (o["compression"])
+			{
+				line = "zlib.output_compression = On";
+			}
+			else
+			{
+				line = "zlib.output_compression = Off";
+			}
+		}
+		else if (li.strncmp ("safe_mode "))
+		{
+			if (o["safemode"])
+			{
+				line = "safe_mode = On";
+			}
+			else
+			{
+				line = "safe_mode = Off";
+			}
+		}
+		else if (li.strncmp ("max_execution_time") == 0)
+		{
+			line = "max_execution_time = %i" %format (o["maxtime"]);
+		}
+		else if (li.strncmp ("memory_limit") == 0)
+		{
+			line = "memory_limit = %iM" %format (o["memory"]);
+		}
+	}
+	
+	fs.save (tmpini, lines.join ("\n"));
+	if (authd.installfile (inifn, inipath))
+	{
+		authd.rollback ();
+		sendresult (moderr::err_authdaemon, "Error installing httpd.conf");
+		return false;
+	}
+	
+	if (authd.reloadservice (conf["config"]["htservice:name"]))
+	{
+		authd.rollback ();
+		sendresult (moderr::err_authdaemon, "Error reloading service");
+		return false;
+	}
+	
+	return true;
+}
+
 bool apache2Module::writeapache2conf (const value &data)
 {
 	const value &o = data["System:ApachePrefs"];
@@ -258,16 +343,6 @@ bool apache2Module::readconfiguration (void)
 	return true;
 }
 
-
-
-// =========================================================================
-// METHOD apache2Module::writephpini
-// =========================================================================
-bool apache2Module::writephpini 	 (const value &v)
-{
-
-	return true;
-}
 
 
 // =========================================================================
