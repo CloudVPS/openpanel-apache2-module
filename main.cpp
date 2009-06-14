@@ -209,7 +209,7 @@ bool apache2Module::writeapache2conf (const value &data)
 		}
 	}
 	
-	fs.save ("httpd.conf", conflines.join ("\n"));
+	fs.save ("/var/opencore/conf/staging/Apache2/httpd.conf", conflines.join ("\n"));
 
 	if (authd.installfile ("httpd.conf","/etc/httpd/conf"))
 	{
