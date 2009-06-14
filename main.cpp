@@ -126,14 +126,24 @@ void apache2Module::getconfig (void)
 			   
 	string apacheconf = fs.load ("/etc/httpd/conf/httpd.conf");
 	value conflines = strutil::splitlines (apacheconf);
-	conflines.savexml ("/tmp/asjemenou.xml");
+	bool skipthis = false;
+	
 	foreach (line, conflines)
 	{
 		string trimmed = line.sval().trim (" \t");
 		value splt = strutil::splitspace (trimmed);
 		
+		if (skipthis && (split[0].sva()l.strncasecmp ("</ifmodule>") != 0))
+			continue;
+			
+		if (skipthis) skipthis = false;
+		
 		caseselector (splt[0])
 		{
+			incaseof ("<IfModule") :
+				if (splt[1].sval() != "worker.c>") skipthis = false;
+				break;
+				
 			incaseof ("KeepAlive") :
 				if (splt[1].sval().strcasecmp ("on") == 0)
 				{
