@@ -133,7 +133,7 @@ void apache2Module::getconfig (void)
 		string trimmed = line.sval().trim (" \t");
 		value splt = strutil::splitspace (trimmed);
 		
-		if (skipthis && (splt[0].sva().strncasecmp ("</ifmodule>") != 0))
+		if (skipthis && (splt[0].sval().strncasecmp ("</ifmodule>") != 0))
 			continue;
 			
 		if (skipthis) skipthis = false;
