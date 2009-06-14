@@ -6,7 +6,9 @@ module Apache2					< uuid d16089e4-3966-44c0-8b53-03e3fea129a6
 								< version 1
 								< languages en_EN
 								< apitype xml
-								
+								< license GPL2
+								< author OpenPanel V.O.F.
+								< url http://www.openpanel.com/
 
 # ============================================================================
 # CLASSES
@@ -70,6 +72,40 @@ class Domain:Vhost				< uuid 59417a58-d793-4ec7-a909-a9acb0236971
 								< default false
 								< tooltip Select to enable mod_perl.
 								< gridwidth 12
+
+
+# ----------------------------------------------------------------------------
+class System:ApachePrefs		< uuid ca3cd350-882e-49dc-a664-7b44e833c27e
+								< version 1
+								< requires OpenCORE:Prefs
+								< indexing manual
+								< singleton apache
+								< uniquein parent
+								< shortname httpd
+								< title Apache
+								< description Apache Server Settings
+								< sortindex 262
+							
+								< capabilities create update
+	
+	enum keepalive				: Allow persistent connections
+	
+	integer keepalivetime		: Keepalive timeout
+								< textwidth 8
+							
+	integer maxclients			: Maximum Number of Connections
+								< textwidth 6
+							
+	integer maxrequests			: Maximum Requests per Process
+								< textwidth 8
+
+							
+# ============================================================================
+# ENUMS
+# ============================================================================
+enum keepalive
+	value on					: On
+	value off					: Off
 
 
 # ============================================================================
