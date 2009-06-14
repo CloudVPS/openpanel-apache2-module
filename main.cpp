@@ -126,6 +126,7 @@ void apache2Module::getconfig (void)
 			   
 	string apacheconf = fs.load ("/etc/httpd/conf/httpd.conf");
 	value conflines = strutil::splitlines (apacheconf);
+	conflines.savexml ("/tmp/asjemenou.xml");
 	foreach (line, conflines)
 	{
 		string trimmed = line.sval().trim (" \t");
