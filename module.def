@@ -106,7 +106,7 @@ class System:PHPPrefs			< uuid 29fa4718-48a3-4d7a-b201-f4ff78f81f5e
 								< version 1
 								< requires OpenCORE:Prefs
 								< indexing manual
-								< singleton apache
+								< singleton php
 								< uniquein parent
 								< shortname httpd
 								< title PHP
