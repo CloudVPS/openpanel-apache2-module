@@ -185,8 +185,6 @@ void apache2Module::getconfig (void)
 	ini.loadini (conf["config"]["phpini"]);
 	
 	value phpp = $attr("type","object")->
-				 $attr("parent","prefs")->
-				 $attr("parentclass","OpenCORE:Prefs")->
 				 $("outputbuffering",ini["PHP"]["output_buffering"]=="On")->
 				 $("compression",ini["PHP"]["zlib.output_compression"]=="On")->
 				 $("safemode",ini["PHP"]["safe_mode"]=="On")->
