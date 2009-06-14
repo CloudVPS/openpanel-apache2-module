@@ -13,6 +13,8 @@
 			<xml.member class="varpath" 		id="varpath"/>
 			<xml.member class="htservice:vhosts_dir" id="htservice:vhosts_dir"/>
 			<xml.member class="htservice:name"		 id="htservice:name"/>
+			<xml.member class="htservice:confdir"	 id="htservice:confdir" type="string"/>
+			<xml.member class="htservice:conffile"   id="htservice:conffile" type="string"/>
 		</xml.proplist>
 	</xml.class>
 

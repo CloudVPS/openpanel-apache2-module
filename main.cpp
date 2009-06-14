@@ -37,6 +37,7 @@ int apache2Module::main (void)
         return 1;
     } 	
 	
+	confpath = "%[htservice:confdir]s/%[htservice:conffile]s" %format (conf["config"]);
 
 	if (command != "delete")
 	{
@@ -123,8 +124,8 @@ void apache2Module::getconfig (void)
 			   $("keepalivetime",60) ->
 			   $("maxclients",200) ->
 			   $("maxrequests",0);
-			   
-	string apacheconf = fs.load ("/etc/httpd/conf/httpd.conf");
+	
+	string apacheconf = fs.load (confpath);
 	value conflines = strutil::splitlines (apacheconf);
 	bool skipthis = false;
 	
@@ -178,8 +179,10 @@ void apache2Module::getconfig (void)
 bool apache2Module::writeapache2conf (const value &data)
 {
 	const value &o = data["System:ApachePrefs"];
+	string fname = conf["config"]["htservice:confdir"];
+	string instpath = conf["config"]["htservice:conffile"];
 	
-	string apacheconf = fs.load ("/etc/httpd/conf/httpd.conf");
+	string apacheconf = fs.load (confpath);
 	value conflines = strutil::splitlines (apacheconf);
 	foreach (line, conflines)
 	{
@@ -209,9 +212,10 @@ bool apache2Module::writeapache2conf (const value &data)
 		}
 	}
 	
-	fs.save ("/var/opencore/conf/staging/Apache2/httpd.conf", conflines.join ("\n"));
+	string fnpath = "/var/opencore/conf/staging/Apache2/%s" %format (fname);
+	fs.save (fnpath, conflines.join ("\n"));
 
-	if (authd.installfile ("httpd.conf","/etc/httpd/conf"))
+	if (authd.installfile (fname,instpath))
 	{
 		authd.rollback ();
 		sendresult (moderr::err_authdaemon, "Error installing httpd.conf");

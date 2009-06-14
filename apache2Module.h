@@ -96,6 +96,7 @@ protected:
 			 /// Parsed and possibly dotted subdomain string
 			 //  ============================================
 	string   subdom;
+	string	 confpath;
 };
 
 #endif
