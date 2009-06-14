@@ -194,14 +194,12 @@ void apache2Module::getconfig (void)
 				 $("memory",ini["PHP"]["memory_limit"].ival());
 
 
+	ap["System:PHPPrefs"] = $attr("type","class") -> $("php", phpp);
+
 	sendresult (moderr::ok, "OK",
 					$("System:ApachePrefs",
 						$attr("type","class") ->
 						$("apache", ap)
-					 )->
-					$("System:PHPPrefs",
-						$attr("type","class") ->
-						$("php", phpp)
 					 ));
 }
 

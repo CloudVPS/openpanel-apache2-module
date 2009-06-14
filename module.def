@@ -104,7 +104,7 @@ class System:ApachePrefs		< uuid ca3cd350-882e-49dc-a664-7b44e833c27e
 # ----------------------------------------------------------------------------
 class System:PHPPrefs			< uuid 29fa4718-48a3-4d7a-b201-f4ff78f81f5e
 								< version 1
-								< requires OpenCORE:Prefs
+								< requires System:ApachePrefs
 								< indexing manual
 								< singleton php
 								< uniquein parent
