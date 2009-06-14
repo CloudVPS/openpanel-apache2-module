@@ -281,8 +281,8 @@ bool apache2Module::writephpini (const value &data)
 bool apache2Module::writeapache2conf (const value &data)
 {
 	const value &o = data["System:ApachePrefs"];
-	string fname = conf["config"]["htservice:confdir"];
-	string instpath = conf["config"]["htservice:conffile"];
+	string fname = conf["config"]["htservice:conffile"];
+	string instpath = conf["config"]["htservice:confdir"];
 	
 	string apacheconf = fs.load (confpath);
 	value conflines = strutil::splitlines (apacheconf);
