@@ -15,6 +15,7 @@
 			<xml.member class="htservice:name"		 id="htservice:name"/>
 			<xml.member class="htservice:confdir"	 id="htservice:confdir" type="string"/>
 			<xml.member class="htservice:conffile"   id="htservice:conffile" type="string"/>
+			<xml.member class="phpini" id="phpini" type="string"/>
 		</xml.proplist>
 	</xml.class>
 

@@ -6,6 +6,7 @@
 		<htservice:name>apache2</htservice:name>
 		<htservice:confdir>/etc/apache2</htservice:confdir>
 		<htservice:conffile>apache2.conf</htservice:conffile>
+		<phpini>/etc/php4/apache2/php.ini</phpini>
 	</config>
 	
 </openpanel.module.domain>

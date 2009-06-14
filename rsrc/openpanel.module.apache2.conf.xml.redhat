@@ -6,6 +6,7 @@
 		<htservice:name>httpd</htservice:name>
 		<htservice:confdir>/etc/httpd/conf</htservice:confdir>
 		<htservice:conffile>httpd.conf</htservice:conffile>
+		<phpini>/etc/php.ini</phpini>
 	</config>
 	
 </openpanel.module.domain>
