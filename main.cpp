@@ -541,8 +541,12 @@ bool apache2Module::checkconfig (value &v)
 		incaseof ("VHost:Alias") : return true;
 		incaseof ("System:ApachePrefs") : return true;
 		defaultcase :
-			sendresult (moderr::err_context, "Context not supported");
-			return false;
+			if (command != "getconfig")
+			{
+				sendresult (moderr::err_context, "Context not supported");
+				return false;
+			}
+			return true;
 	}
 	
 	// unreachable
