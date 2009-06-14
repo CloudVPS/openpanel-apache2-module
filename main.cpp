@@ -141,7 +141,7 @@ void apache2Module::getconfig (void)
 		caseselector (splt[0])
 		{
 			incaseof ("<IfModule") :
-				if (splt[1].sval() != "prefork.c>") skipthis = false;
+				if (splt[1].sval() != "prefork.c>") skipthis = true;
 				break;
 				
 			incaseof ("KeepAlive") :
