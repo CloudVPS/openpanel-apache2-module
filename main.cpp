@@ -117,7 +117,7 @@ int apache2Module::main (void)
 
 void apache2Module::getconfig (void)
 {
-	value dt = $attr("type","object") ->
+	value ap = $attr("type","object") ->
 			   $attr("parent","prefs") ->
 			   $attr("parentclass","OpenCORE:Prefs") ->
 			   $("keepalive","off") ->
@@ -148,32 +148,49 @@ void apache2Module::getconfig (void)
 			incaseof ("KeepAlive") :
 				if (splt[1].sval().strcasecmp ("on") == 0)
 				{
-					dt["keepalive"] = "on";
+					ap["keepalive"] = "on";
 				}
 				break;
 			
 			incaseof ("KeepAliveTimeout") :
-				dt["keepalivetime"] = splt[1].ival();
+				ap["keepalivetime"] = splt[1].ival();
 				break;
 			
 			incaseof ("MaxClients") :
-				dt["maxclients"] = splt[1].ival();
+				ap["maxclients"] = splt[1].ival();
 				break;
 			
 			incaseof ("MaxRequestsPerChild") :
-				dt["maxrequests"] = splt[1].ival();
+				ap["maxrequests"] = splt[1].ival();
 				break;
 			
 			defaultcase :
 				break;
 		}
 	}
-		
+	
+	value ini;
+	ini.loadini (conf["config"]["phpini"]);
+	
+	value phpp = $attr("type","object")->
+				 $attr("parent","prefs")->
+				 $attr("parentclass","OpenCORE:Prefs")->
+				 $("outputbuffering",ini["PHP"]["output_buffering"]=="On")->
+				 $("compression",ini["PHP"]["zlib.output_compression"]=="On")->
+				 $("safemode",ini["PHP"]["safe_mode"]=="On")->
+				 $("maxtime",ini["PHP"]["max_execution_time"].ival())->
+				 $("memory",ini["PHP"]["memory_limit"].ival());
+
+
 	sendresult (moderr::ok, "OK",
-				$("System:ApachePrefs",
-					$attr("type","class") ->
-					$("apache", dt)
-				 ));
+					$("System:ApachePrefs",
+						$attr("type","class") ->
+						$("apache", ap)
+					 )->
+					$("System:PHPPrefs",
+						$attr("type","class") ->
+						$("php", phpp
+					 ));
 }
 
 bool apache2Module::writeapache2conf (const value &data)
@@ -615,6 +632,7 @@ bool apache2Module::checkconfig (value &v)
 			
 		incaseof ("VHost:Alias") : return true;
 		incaseof ("System:ApachePrefs") : return true;
+		incaseof ("System:PHPPrefs") : return true;
 		defaultcase :
 			if (command != "getconfig")
 			{

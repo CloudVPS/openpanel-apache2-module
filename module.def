@@ -101,6 +101,29 @@ class System:ApachePrefs		< uuid ca3cd350-882e-49dc-a664-7b44e833c27e
 	integer maxrequests			: Maximum Requests per Process
 								< textwidth 8
 
+# ----------------------------------------------------------------------------
+class System:PHPPrefs			< uuid 29fa4718-48a3-4d7a-b201-f4ff78f81f5e
+								< version 1
+								< requires OpenCORE:Prefs
+								< indexing manual
+								< singleton apache
+								< uniquein parent
+								< shortname httpd
+								< title PHP
+								< description PHP Runtime Settings
+								< sortindex 262
+							
+								< capabilities update
+	
+	bool outputbuffering		: Output buffering
+	bool compression			: Zlib compression
+	bool safemode				: PHP Safe mode
+	
+	integer maxtime				: Maximum script execution time
+								< textwidth 6
+								
+	integer memory				: Maximum memory (MB)
+								< textwidth 6
 							
 # ============================================================================
 # ENUMS
