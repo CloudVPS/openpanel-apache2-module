@@ -1,4 +1,4 @@
-// --------------------------------------------------------------------------
+wr// --------------------------------------------------------------------------
 // OpenPanel - The Open Source Control Panel
 // Copyright (c) 2006-2007 PanelSix
 //
@@ -48,91 +48,57 @@ int apache2Module::main (void)
 	subdom = subdom.left(subdom.strlen() - pdom.strlen() - 1);
 	if (subdom != "")
 		subdom.strcat(".");
-			
+	
+	statstring classid = data["OpenCORE:Session"]["classid"];
+	
 	//
 	// Depend the actions which has to 
 	// be executed
 	//
-	caseselector (command)
+	caseselector (classid)
 	{
-		incaseof ("create") : 
-			if (data["OpenCORE:Session"]["classid"] == "Domain:Vhost")
+		incaseof ("Domain:Vhost") :
+			caseselector (command)
 			{
-				// create config
-				if(! apache2Module::writevhost (data))
+				incaseof ("create") :
+					if (! apache2Module::writevhost (data)) return 0;
+					break;
+					
+				incaseof ("update") :
+					if (! apache2Module::writevhost (data)) return 0;
+					break;
+					
+				incaseof ("delete") :
+					if (! apache2Module::removevhost (data)) return 0;
+					
+				defaultcase:
+					sendresult (moderr::err_command, "Not supported");
 					return 0;
-			}
-			else
-			{
-				sendresult (moderr::err_command, 
-							"Scope does not support command create");			
 			}
 			break;
-			
-		incaseof ("update") :
-			if (data["OpenCORE:Session"]["classid"] == "Domain:Vhost")
+		
+		incaseof ("System:ApachePrefs") :
+			caseselector (command)
 			{
-				// create config
-				if(! apache2Module::writevhost (data))
+				incaseof ("update") :
+					if (! apache2Module::writeapache2conf (data)) return 0;
+					break;
+				
+				defaultcase :
+					sendresult (moderr::err_command, "Not supported");
 					return 0;
 			}
-			else if (data["OpenCORE:Session"]["classid"] == "Webserver" ||
-					 data["OpenCORE:Session"]["classid"] == "Webserver:Module_php" )
-			{
-				// TODO: update webserver configurations
-				sendresult (moderr::err_command, 
-							"Not yet implemented");			
+			break;
 
+		defaultcase :
+			if (command == "getconfig")
+			{
+				apache2Module::getconfig();
 				return 0;
 			}
-			else
-			{
-				sendresult (moderr::err_command, 
-							"Scope does not support command update");			
-			}
-			
-
-			break;
-			
-		incaseof ("delete") :
-			if (data["OpenCORE:Session"]["classid"] == "Domain:Vhost")
-			{
-				// create config
-				if(! apache2Module::removevhost (data))
-					return 0;
-			}
-			else
-			{
-				sendresult (moderr::err_command, 
-							"Scope does not support command delete");			
-			}
-			break;
-
-		incaseof ("getconfig") :
-			sendresult (moderr::ok, "OK",
-				$("System:ApachePrefs",
-					$attr("type","class") ->
-					$("apache",
-						$attr("type", "object") ->
-						$attr("parent", "prefs") ->
-						$attr("parentclass", "OpenCORE:Prefs") ->
-						$("keepalive",false)->
-						$("keepalivetime",60)->
-						$("maxclients",200)->
-						$("maxrequests",1000)
-					 )
-				 ));
-			sendresult (moderr::err_command, 
-						"Not yet implemented");			
-
-			break;
-		incaseof ("validate") : ; // never comes here
-			
-		defaultcase:
-			sendresult (moderr::err_command, 
-						"Unsupported command");
+			sendresult (moderr::err_command, "Class not supported");
+			return 0;
 	}
-	
 	// send quit
 	if (authd.quit ())
 	{
@@ -146,7 +112,110 @@ int apache2Module::main (void)
 	sendresult (moderr::ok, "");
 	return 0;
 }
+	
 
+void apache2Module::getconfig (void)
+{
+	value dt = $attr("type","object") ->
+			   $attr("parent","prefs") ->
+			   $attr("parentclass","OpenCORE:Prefs") ->
+			   $("keepalive","off") ->
+			   $("keepalivetime",60) ->
+			   $("maxclients",200) ->
+			   $("maxrequests",0);
+			   
+	string apacheconf = fs.load ("/etc/httpd/conf/httpd.conf");
+	value conflines = strutil::splitlines (apacheconf);
+	foreach (line, conflines)
+	{
+		string trimmed = line.sval().trim (" \t");
+		value splt = strutil::splitspace (trimmed);
+		
+		caseselector (splt[0])
+		{
+			incaseof ("KeepAlive") :
+				if (splt[1].sval().strcasecmp ("on") == 0)
+				{
+					dt["keepalive"] = "on";
+				}
+				break;
+			
+			incaseof ("KeepAliveTimeout") :
+				dt["keepalivetime"] = splt[1].ival();
+				break;
+			
+			incaseof ("MaxClients") :
+				dt["maxclients"] = splt[1].ival();
+				break;
+			
+			incaseof ("MaxRequestsPerChild") :
+				dt["maxrequests"] = splt[1].ival();
+				break;
+			
+			defaultcase :
+				break;
+		}
+	}
+		
+	sendresult (moderr::ok, "OK",
+				$("System:ApachePrefs",
+					$attr("type","class") ->
+					$("apache", dt)
+				 ));
+}
+
+bool apache2Module::writeapache2conf (const value &data)
+{
+	const value &o = data["System:ApachePrefs"];
+	
+	string apacheconf = fs.load ("/etc/httpd/conf/httpd.conf");
+	value conflines = strutil::splitlines (apacheconf);
+	foreach (line, conflines)
+	{
+		string trimmed = line.sval().trim (" \t");
+		value splt = strutil::splitspace (trimmed);
+		
+		caseselector (splt[0])
+		{
+			incaseof ("KeepAlive") :
+				line = "KeepAlive %s" %format (o["keepalive"]);
+				break;
+			
+			incaseof ("KeepAliveTimeout") :
+				line = "KeepAliveTimeout %i" %format (o["keepalivetime"]);
+				break;
+			
+			incaseof ("MaxClients") :
+				line = "MaxClients %i" %format (o["maxclients"]);
+				break;
+			
+			incaseof ("MaxRequestsPerChild") :
+				line = "MaxRequestsPerChild %i" %format (o["maxrequests"]);
+				break;
+			
+			defaultcase :
+				break;
+		}
+	}
+	
+	fs.save ("httpd.conf", conflines.join ("\n"));
+
+	if (authd.installfile ("httpd.conf","/etc/httpd/conf"))
+	{
+		authd.rollback ();
+		sendresult (moderr::err_authdaemon, "Error installing httpd.conf");
+		return false;
+	}
+	
+	if (authd.reloadservice (conf["config"]["htservice:name"]))
+	{
+		authd.rollback ();
+		sendresult (moderr::err_authdaemon, "Error reloading service");
+		return false;
+	}
+	
+	return true;
+}
 
 // =========================================================================
 // METHOD apache2Module::readconfiguration
@@ -157,15 +226,6 @@ bool apache2Module::readconfiguration (void)
 	return true;
 }
 
-
-// =========================================================================
-// METHOD apache2Module::writeapache2conf
-// =========================================================================
-bool apache2Module::writeapache2conf (const value &v)
-{
-
-	return true;
-}
 
 
 // =========================================================================

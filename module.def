@@ -88,7 +88,7 @@ class System:ApachePrefs		< uuid ca3cd350-882e-49dc-a664-7b44e833c27e
 								< description Apache Server Settings
 								< sortindex 262
 							
-								< capabilities create update
+								< capabilities update
 	
 	enum keepalive				: Allow persistent connections
 	

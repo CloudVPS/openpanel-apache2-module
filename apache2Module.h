@@ -90,6 +90,8 @@ protected:
 			 //  ============================================
 	bool	 removevhost (value &);
 	
+	void	 getconfig (void);
+	
 			 //  ============================================
 			 /// Parsed and possibly dotted subdomain string
 			 //  ============================================
