@@ -114,6 +114,11 @@ enum keepalive
 # AUTHD
 # ============================================================================
 authd fileops
+	match httpd.conf			: /etc/%%SERVICENAME%%/conf
+								< user root
+								< group root
+								< perms 0644
+								
 	match *.conf				: /etc/%%SERVICENAME%%/openpanel.d
 								< user root
 								< group root
