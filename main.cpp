@@ -239,7 +239,7 @@ bool apache2Module::writephpini (const value &data)
 				line = "zlib.output_compression = Off";
 			}
 		}
-		else if (li.strncmp ("safe_mode "))
+		else if (li.strncmp ("safe_mode ") == 0)
 		{
 			if (o["safemode"])
 			{
