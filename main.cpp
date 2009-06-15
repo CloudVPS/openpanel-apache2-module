@@ -697,8 +697,6 @@ bool apache2Module::checkconfig (value &v)
 					return true;
 				}
 			}
-			else
-			{
 			sendresult (moderr::err_context, 
 						"Context body does not exists");	
 			return false;
