@@ -108,10 +108,10 @@ class System:PHPPrefs			< uuid 29fa4718-48a3-4d7a-b201-f4ff78f81f5e
 								< indexing manual
 								< singleton php
 								< uniquein parent
-								< shortname httpd
+								< shortname php
 								< title PHP
 								< description PHP Runtime Settings
-								< sortindex 262
+								< sortindex 264
 							
 								< capabilities update
 	
