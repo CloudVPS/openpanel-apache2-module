@@ -23,6 +23,7 @@ class Meta:Website				< uuid 1b94ce81-7a44-42b1-8b85-c61630e66e8a
 								< shortname website
 								< title Website
 								< description Website
+								< emptytext No websites have been configured for this domain yet.
 								
 								< metatype base
 								
