@@ -94,7 +94,7 @@ class System:ApachePrefs		< uuid ca3cd350-882e-49dc-a664-7b44e833c27e
 	enum keepalive				: Allow persistent connections
 	
 	integer keepalivetime		: Keepalive timeout
-								< textwidth 8
+								< textwidth 6
 							
 	integer maxclients			: Maximum Number of Connections
 								< textwidth 6
@@ -138,10 +138,11 @@ class System:PHPPrefs			< uuid 29fa4718-48a3-4d7a-b201-f4ff78f81f5e
 	
 	integer maxtime				: Maximum script execution time
 								< textwidth 6
-	integer postsize			: HTTP POST limit (MB)
+								< paddingtop 16
+	integer postsize			: POST size-limit (MB)
 								< textwidth 6
 								< sameline true
-								< labelwidth 212
+								< labelwidth 232
 								
 	integer memory				: Maximum memory (MB)
 								< textwidth 6
