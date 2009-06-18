@@ -117,11 +117,29 @@ class System:PHPPrefs			< uuid 29fa4718-48a3-4d7a-b201-f4ff78f81f5e
 								< capabilities update
 	
 	bool outputbuffering		: Output buffering
+	bool exposephp				: Show PHP version in headers
+								< sameline true
+								< labelwidth 250
+								
 	bool compression			: Zlib compression
+	bool displayerrors			: Show PHP errors inline
+								< sameline true
+								< labelwidth 250
+								
 	bool safemode				: PHP Safe mode
+	bool uploads				: Allow file uploads
+								< sameline true
+								< labelwidth 250
+	
+	bool urlopen				: Allow urlopen()
+	bool enabledl				: Allow module loading
+								< sameline true
+								< labelwidth 250
 	
 	integer maxtime				: Maximum script execution time
 								< textwidth 6
+	integer postsize			: HTTP POST limit (MB)
+								< labelwidth 212
 								
 	integer memory				: Maximum memory (MB)
 								< textwidth 6

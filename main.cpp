@@ -186,9 +186,13 @@ void apache2Module::getconfig (void)
 	
 	value phpp = $attr("type","object")->
 				 $("outputbuffering",ini["PHP"]["output_buffering"]=="On")->
+				 $("exposephp",ini["PHP"]["expose_php"]=="On")->
 				 $("compression",ini["PHP"]["zlib.output_compression"]=="On")->
+				 $("displayerrors",ini["PHP"]["display_errors"]=="On")->
 				 $("safemode",ini["PHP"]["safe_mode"]=="On")->
+				 $("uploads",ini["PHP"]["file_uploads"]=="On")->
 				 $("maxtime",ini["PHP"]["max_execution_time"].ival())->
+				 $("postsize",ini["PHP"]["post_max_size"].ival())->
 				 $("memory",ini["PHP"]["memory_limit"].ival());
 
 
@@ -212,48 +216,33 @@ bool apache2Module::writephpini (const value &data)
 	value lines = strutil::splitlines (in);
 	foreach (line, lines)
 	{
+		#define SETBOOL(mykey,inikey) \
+			if (li.strncmp (inikey " ") == 0) { \
+				if (o[mykey]) line = inikey " = On"; \
+				else line = inikey " = Off"; \
+				continue; \
+			}
+		
+		#define SETINT(mykey,inikey) \
+			if (li.strncmp (inikey " ") == 0) { \
+				line = inikey " = %i" %format(o[mykey]); \
+				continue; \
+			}
+		
 		const string &li = line.sval();
-		if (li.strncmp ("output_buffering") == 0)
-		{
-			if (o["outputbuffering"])
-			{
-				line = "output_buffering = On";
-			}
-			else
-			{
-				line = "output_buffering = Off";
-			}
-		}
-		else if (li.strncmp ("zlib.output_compression") == 0)
-		{
-			if (o["compression"])
-			{
-				line = "zlib.output_compression = On";
-			}
-			else
-			{
-				line = "zlib.output_compression = Off";
-			}
-		}
-		else if (li.strncmp ("safe_mode ") == 0)
-		{
-			if (o["safemode"])
-			{
-				line = "safe_mode = On";
-			}
-			else
-			{
-				line = "safe_mode = Off";
-			}
-		}
-		else if (li.strncmp ("max_execution_time") == 0)
-		{
-			line = "max_execution_time = %i" %format (o["maxtime"]);
-		}
-		else if (li.strncmp ("memory_limit") == 0)
-		{
-			line = "memory_limit = %iM" %format (o["memory"]);
-		}
+		
+		SETBOOL("outputbuffering","output_buffering");
+		SETBOOL("exposephp","expose_php");
+		SETBOOL("compression","zlib.output_compression");
+		SETBOOL("displayerrors","display_errors");
+		SETBOOL("safemode","safe_mode");
+		SETBOOL("uploads","file_uploads");
+		SETINT("maxtime","max_execution_time");
+		SETINT("postsize","post_max_size");
+		SETINT("memory","memory_limit");
+		
+		#undef SETBOOL
+		#undef SETINT
 	}
 	
 	fs.save (tmpini, lines.join ("\n"));
