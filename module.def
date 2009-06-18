@@ -139,6 +139,8 @@ class System:PHPPrefs			< uuid 29fa4718-48a3-4d7a-b201-f4ff78f81f5e
 	integer maxtime				: Maximum script execution time
 								< textwidth 6
 	integer postsize			: HTTP POST limit (MB)
+								< textwidth 6
+								< sameline true
 								< labelwidth 212
 								
 	integer memory				: Maximum memory (MB)
