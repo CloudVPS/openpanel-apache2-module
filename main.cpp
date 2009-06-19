@@ -372,7 +372,7 @@ bool apache2Module::writevhost 		 (value &v)
 	{
 		f.printf ("<VirtualHost *:80>\n");
 		if (vhost["admin"].sval().strlen()) f.printf ("   ServerAdmin        \"%S\"\n", vhost["admin"].cval());
-		f.printf ("   DocumentRoot       %s/web/%s%s/public_html\n", 
+		f.printf ("   DocumentRoot       %s/sites/%s%s/public_html\n", 
 				  homedir.cval(),
 				  subdom.cval(),
 				  v["Domain"]["id"].cval());
@@ -414,7 +414,7 @@ bool apache2Module::writevhost 		 (value &v)
 		// Add handler types which are supported for
 		// this Virtual host
 		//
-		f.printf ("   <Directory %s/web/%s%s/public_html>\n",
+		f.printf ("   <Directory %s/sites/%s%s/public_html>\n",
 				  homedir.cval(),
 				  subdom.cval(),
 				  v["Domain"]["id"].cval());
@@ -486,7 +486,7 @@ bool apache2Module::writevhost 		 (value &v)
 			return false;
 		}		
 
-		string userdir = "web/%s%s/public_html"
+		string userdir = "sites/%s%s/public_html"
 								%format (subdom,v["Domain"]["id"]);
 
 		string webroot = "%s/%s" %format (homedir,userdir);
@@ -536,7 +536,7 @@ bool apache2Module::removevhost (value &v)
 		string 	fname;	
 
 		// Construct file to write
-		fname.printf ("%s/vhosts/%s%s.conf", 
+		fname.printf ("%s/%s%s.conf", 
 				   	  conf["config"]["htservice:vhosts_dir"].cval(),
 				   	  subdom.cval(),
 				   	  v["Domain"]["id"].cval());
