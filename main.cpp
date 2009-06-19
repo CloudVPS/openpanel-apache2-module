@@ -372,7 +372,7 @@ bool apache2Module::writevhost 		 (value &v)
 	{
 		f.printf ("<VirtualHost *:80>\n");
 		if (vhost["admin"].sval().strlen()) f.printf ("   ServerAdmin        \"%S\"\n", vhost["admin"].cval());
-		f.printf ("   DocumentRoot       %s/web/%s%s\n", 
+		f.printf ("   DocumentRoot       %s/web/%s%s/public_html\n", 
 				  homedir.cval(),
 				  subdom.cval(),
 				  v["Domain"]["id"].cval());
@@ -414,7 +414,7 @@ bool apache2Module::writevhost 		 (value &v)
 		// Add handler types which are supported for
 		// this Virtual host
 		//
-		f.printf ("   <Directory %s/web/%s%s>\n",
+		f.printf ("   <Directory %s/web/%s%s/public_html>\n",
 				  homedir.cval(),
 				  subdom.cval(),
 				  v["Domain"]["id"].cval());
@@ -486,24 +486,22 @@ bool apache2Module::writevhost 		 (value &v)
 			return false;
 		}		
 
-		string userdir;
-		userdir.printf ("web/%s%s", subdom.cval(),
-						v["Domain"]["id"].str());
-		if( authd.makeuserdir (username, "0711", userdir))
-		{
-			// Do rollback
-			authd.rollback ();
-			
-			string errorstr;
-			errorstr.printf ("Error creating %s/%s", homedir.str(),
-							 userdir.str());
+		string userdir = "web/%s%s/public_html"
+								%format (subdom,v["Domain"]["id"]);
 
-			sendresult (moderr::err_authdaemon, errorstr);
-			//			"Error creating /home/html/[domain] directory");
-			
-			return false;
-		}		
-		
+		string webroot = "%s/%s" %format (homedir,userdir);
+		if (! fs.exists (webroot))
+		{
+			if( authd.makeuserdir (username, "0711", userdir))
+			{
+				// Do rollback
+				authd.rollback ();
+				
+				string errorstr = "Error creating %s" %format (webroot);
+				sendresult (moderr::err_authdaemon, errorstr);
+				return false;
+			}
+		}
 		
 		if ( authd.reloadservice (conf["config"]["htservice:name"]) )
 		{
