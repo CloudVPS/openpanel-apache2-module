@@ -62,17 +62,19 @@ class Domain:Vhost				< uuid 59417a58-d793-4ec7-a909-a9acb0236971
 								< tooltip Email address for the website administrator (webmaster)
 								< gridhide true
 	
-	bool mod_php				: PHP module
+	bool mod_php				: PHP
 								< default true
 								< tooltip Select to enable mod_php
 								< gridwidth 12
 	
-	bool mod_cgi				: CGI module
+	bool mod_cgi				: CGI
+								< sameline true
 								< default false
 								< tooltip Select to enable the running of CGI scripts.
 								< gridwidth 12
 	
-	bool mod_perl				: Perl module
+	bool mod_perl				: Perl
+								< sameline true
 								< default false
 								< tooltip Select to enable mod_perl.
 								< gridwidth 12
