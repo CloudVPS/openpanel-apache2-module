@@ -531,7 +531,7 @@ bool apache2Module::writevhost 		 (value &v)
 bool apache2Module::removevhost (value &v)
 {
 
-	foreach (vhost, v["Domain"]["Domain:Vhost"])
+	foreach (vhost, v["Domain:Vhost"])
 	{
 		string 	fname;	
 
