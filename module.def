@@ -119,22 +119,22 @@ class System:PHPPrefs			< uuid 29fa4718-48a3-4d7a-b201-f4ff78f81f5e
 							
 								< capabilities update
 	
-	bool outputbuffering		: Output buffering
+	bool outputbuffering		: Output buffering < breakcolumn true
 	bool exposephp				: Show PHP version in headers
 								< sameline true
 								< labelwidth 250
 								
-	bool compression			: Zlib compression
+	bool compression			: Zlib compression < breakcolumn true
 	bool displayerrors			: Show PHP errors inline
 								< sameline true
 								< labelwidth 250
 								
-	bool safemode				: PHP Safe mode
+	bool safemode				: PHP Safe mode < breakcolumn true
 	bool uploads				: Allow file uploads
 								< sameline true
 								< labelwidth 250
 	
-	bool urlopen				: Allow urlopen()
+	bool urlopen				: Allow urlopen() < breakcolumn true
 	bool enabledl				: Allow module loading
 								< sameline true
 								< labelwidth 250
