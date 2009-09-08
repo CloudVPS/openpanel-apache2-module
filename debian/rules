@@ -1,0 +1,53 @@
+#!/usr/bin/make -f
+
+
+BUILD_ROOT=$(CURDIR)/debian/tmp
+install:
+trm -rf ${BUILD_ROOT}
+tmkdir -p ${BUILD_ROOT}/var/opencore/modules/Apache2.module
+tmkdir -p ${BUILD_ROOT}/var/opencore/conf/staging/Apache2
+tmkdir -p ${BUILD_ROOT}/etc/apache2/conf.d
+tmkdir -p ${BUILD_ROOT}/etc/apache2/sites-enabled
+tmkdir -p ${BUILD_ROOT}/var/log/apache2/openpanel/logs
+tcp -rf ./apache2module.app ${BUILD_ROOT}/var/opencore/modules/Apache2.module/
+tln -sf ./apache2module.app/exec ${BUILD_ROOT}/var/opencore/modules/Apache2.module/action
+tcp module.xml *.html techsupport.* ${BUILD_ROOT}/var/opencore/modules/Apache2.module/
+tinstall -m 755 verify ${BUILD_ROOT}/var/opencore/modules/Apache2.module/verify
+techo "# Openpanel configuration" > ${BUILD_ROOT}/etc/apache2/sites-enabled/999-openpanel 
+techo >> ${BUILD_ROOT}/etc/apache2/sites-enabled/999-openpanel 
+techo "NameVirtualHost *:80" >> ${BUILD_ROOT}/etc/apache2/sites-enabled/999-openpanel
+techo "# Include openpanel's vhosts" >> ${BUILD_ROOT}/etc/apache2/sites-enabled/999-openpanel 
+techo "Include /etc/apache2/openpanel.d/*.conf" >> ${BUILD_ROOT}/etc/apache2/sites-enabled/999-openpanel 
+techo >> ${BUILD_ROOT}/etc/apache2/sites-enabled/999-openpanel 
+techo "# Logax configuration" >> ${BUILD_ROOT}/etc/apache2/sites-enabled/999-openpanel 
+techo 'LogFormat "%v %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" openpanelcomb' >> ${BUILD_ROOT}/etc/apache2/sites-enabled/999-openpanel 
+techo 'CustomLog "|/usr/bin/logax -b 10 -r -i 180 -m 500000 -s /var/log/apache2/openpanel /var/log/apache2/openpanel/logs" openpanelcomb' >> ${BUILD_ROOT}/etc/apache2/sites-enabled/999-openpanel 
+techo 'Alias /openpanel-template-images/ "/var/openpanel/http-templates/images/"' >> ${BUILD_ROOT}/etc/apache2/sites-enabled/999-openpanel 
+techo 'Alias /openpanel-template-docs/ "/var/openpanel/http-templates/"' >> ${BUILD_ROOT}/etc/apache2/sites-enabled/999-openpanel 
+techo '<Directory "/var/openpanel/http-templates">' >> ${BUILD_ROOT}/etc/apache2/sites-enabled/999-openpanel 
+techo '  AllowOverride None' >> ${BUILD_ROOT}/etc/apache2/sites-enabled/999-openpanel 
+techo '  Order allow,deny' >> ${BUILD_ROOT}/etc/apache2/sites-enabled/999-openpanel 
+techo '  Allow from all' >> ${BUILD_ROOT}/etc/apache2/sites-enabled/999-openpanel 
+techo '</Directory>' >> ${BUILD_ROOT}/etc/apache2/sites-enabled/999-openpanel 
+techo '<LocationMatch "^/+$">' >> ${BUILD_ROOT}/etc/apache2/sites-enabled/999-openpanel 
+techo '  Options -Indexes' >> ${BUILD_ROOT}/etc/apache2/sites-enabled/999-openpanel 
+techo '  ErrorDocument 403 /openpanel-template-docs/index.html' >> ${BUILD_ROOT}/etc/apache2/sites-enabled/999-openpanel 
+techo '</LocationMatch>' >> ${BUILD_ROOT}/etc/apache2/sites-enabled/999-openpanel 
+
+build:
+t./configure
+tmake
+binary-indep:
+
+binary-arch binary: build install
+	if [ -d debian/tmp ] ; then dh_install -a --sourcedir=debian/tmp ; fi
+	dh_installdocs -a
+	dh_installdeb -a
+	dh_compress -a
+	dh_fixperms -a
+	dh_shlibdeps -a
+	dh_gencontrol -a
+	dh_md5sums -a
+	dh_builddeb -a
+
+.PHONY: build binary binary-arch binary-indep clean install
