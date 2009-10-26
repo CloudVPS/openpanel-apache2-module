@@ -14,7 +14,7 @@ module.xml: module.def
 
 apache2module.exe: $(OBJ) module.xml
 	$(LD) $(LDFLAGS) -o apache2module.exe $(OBJ) $(LIBS) \
-	../opencore/api/c++/lib/libcoremodule.a
+	/usr/lib/opencore/libcoremodule.a
 
 clean:
 	rm -f *.o *.exe
@@ -23,4 +23,4 @@ clean:
 
 SUFFIXES: .cpp .o
 .cpp.o:
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -I../opencore/api/c++/include -c -g $<
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -I/usr/include/opencore -c -g $<
