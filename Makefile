@@ -4,10 +4,10 @@ OBJ	= main.o version.o
 
 all: apache2module.exe module.xml
 	./addflavor.sh
-	mkapp apache2module 
+	grace mkapp apache2module 
 
 version.cpp:
-	mkversion version.cpp
+	grace mkversion version.cpp
 
 module.xml: module.def
 	mkmodulexml < module.def > module.xml
