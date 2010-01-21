@@ -7,6 +7,6 @@ Standards-Version: 3.7.2
 
 Package: openpanel-mod-apache2
 Architecture: any
-Depends: , openpanel-core (>= 0.8.3), openpanel-mod-user, openpanel-mod-domain, apache2, logax, libapache2-mod-perl2, libapache2-mod-php5 | libapache2-mod-php4
+Depends: openpanel-core (>= 0.8.3), openpanel-mod-user, openpanel-mod-domain, apache2, logax, libapache2-mod-php5 | php5-cgi
 Description: Configure the apache2 webserver
  Openpanel webserver management module
