@@ -239,6 +239,8 @@ bool apache2Module::writephpini (const value &data)
 		SETBOOL("displayerrors","display_errors");
 		SETBOOL("safemode","safe_mode");
 		SETBOOL("uploads","file_uploads");
+		SETBOOL("urlopen","allow_url_fopen");
+		SETBOOL("enabled","enable_dl");
 		SETINT("maxtime","max_execution_time");
 		SETINT("postsize","post_max_size");
 		SETINT("memory","memory_limit");
