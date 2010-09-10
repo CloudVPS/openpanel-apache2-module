@@ -190,6 +190,8 @@ void apache2Module::getconfig (void)
 				 $("compression",ini["PHP"]["zlib.output_compression"]=="On")->
 				 $("displayerrors",ini["PHP"]["display_errors"]=="On")->
 				 $("safemode",ini["PHP"]["safe_mode"]=="On")->
+				 $("urlopen",ini["PHP"]["allow_url_fopen"]=="On")->
+				 $("enabled",ini["PHP"]["enable_dl"]=="On")->
 				 $("uploads",ini["PHP"]["file_uploads"]=="On")->
 				 $("maxtime",ini["PHP"]["max_execution_time"].ival())->
 				 $("postsize",ini["PHP"]["post_max_size"].ival())->
