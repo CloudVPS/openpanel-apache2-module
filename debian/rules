@@ -1,0 +1,58 @@
+#!/usr/bin/make -f
+
+build: build-stamp
+build-stamp:
+	./configure
+	make
+
+install: install-stamp
+install-stamp: build-stamp
+	dh_testdir
+	dh_testroot
+	dh_installdirs
+	cp -rf ./apache2module.app debian/openpanel-mod-apache2/var/opencore/modules/Apache2.module/
+	ln -sf ./apache2module.app/exec debian/openpanel-mod-apache2/var/opencore/modules/Apache2.module/action
+	cp module.xml *.html techsupport.* debian/openpanel-mod-apache2/var/opencore/modules/Apache2.module/
+	install -m 755 verify debian/openpanel-mod-apache2/var/opencore/modules/Apache2.module/verify
+	echo "# Openpanel configuration" > debian/openpanel-mod-apache2/etc/apache2/sites-enabled/999-openpanel 
+	echo >> debian/openpanel-mod-apache2/etc/apache2/sites-enabled/999-openpanel 
+	echo "NameVirtualHost *:80" >> debian/openpanel-mod-apache2/etc/apache2/sites-enabled/999-openpanel
+	echo "# Include openpanel's vhosts" >> debian/openpanel-mod-apache2/etc/apache2/sites-enabled/999-openpanel 
+	echo "Include /etc/apache2/openpanel.d/*.conf" >> debian/openpanel-mod-apache2/etc/apache2/sites-enabled/999-openpanel 
+	echo >> debian/openpanel-mod-apache2/etc/apache2/sites-enabled/999-openpanel 
+	echo "# Logax configuration" >> debian/openpanel-mod-apache2/etc/apache2/sites-enabled/999-openpanel 
+	echo 'LogFormat "%v %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" openpanelcomb' >> debian/openpanel-mod-apache2/etc/apache2/sites-enabled/999-openpanel 
+	echo 'CustomLog "|/usr/bin/logax -b 10 -r -i 180 -m 500000 -s /var/log/apache2/openpanel /var/log/apache2/openpanel/logs" openpanelcomb' >> debian/openpanel-mod-apache2/etc/apache2/sites-enabled/999-openpanel 
+	echo 'Alias /openpanel-template-images/ "/var/openpanel/http-templates/images/"' >> debian/openpanel-mod-apache2/etc/apache2/sites-enabled/999-openpanel 
+	echo 'Alias /openpanel-template-docs/ "/var/openpanel/http-templates/"' >> debian/openpanel-mod-apache2/etc/apache2/sites-enabled/999-openpanel 
+	echo '<Directory "/var/openpanel/http-templates">' >> debian/openpanel-mod-apache2/etc/apache2/sites-enabled/999-openpanel 
+	echo '  AllowOverride None' >> debian/openpanel-mod-apache2/etc/apache2/sites-enabled/999-openpanel 
+	echo '  Order allow,deny' >> debian/openpanel-mod-apache2/etc/apache2/sites-enabled/999-openpanel 
+	echo '  Allow from all' >> debian/openpanel-mod-apache2/etc/apache2/sites-enabled/999-openpanel 
+	echo '</Directory>' >> debian/openpanel-mod-apache2/etc/apache2/sites-enabled/999-openpanel 
+	echo '<LocationMatch "^/+$">' >> debian/openpanel-mod-apache2/etc/apache2/sites-enabled/999-openpanel 
+	echo '  Options -Indexes' >> debian/openpanel-mod-apache2/etc/apache2/sites-enabled/999-openpanel 
+	echo '  ErrorDocument 403 /openpanel-template-docs/index.html' >> debian/openpanel-mod-apache2/etc/apache2/sites-enabled/999-openpanel 
+	echo '</LocationMatch>' >> debian/openpanel-mod-apache2/etc/apache2/sites-enabled/999-openpanel 
+
+binary-indep: build install
+
+binary-arch: build install
+	if [ -d debian/tmp ] ; then dh_install -a --sourcedir=debian/tmp ; fi
+	dh_installdocs -a
+	dh_installdeb -a
+	dh_compress -a
+	dh_fixperms -a
+	dh_shlibdeps -a
+	dh_gencontrol -a
+	dh_md5sums -a
+	dh_builddeb -a
+
+binary: binary-indep binary-arch
+
+clean:
+	rm -f build-stamp install-stamp
+	[ ! -f makeinclude ] || make clean
+	dh_clean
+
+.PHONY: build binary binary-arch binary-indep clean install

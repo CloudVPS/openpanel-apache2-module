@@ -1,0 +1,4 @@
+var/opencore/modules/Apache2.module
+etc/apache2/sites-enabled
+var/opencore/conf/staging/Apache2
+var/log/apache2/openpanel/logs
