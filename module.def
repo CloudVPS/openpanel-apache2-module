@@ -140,7 +140,7 @@ class System:PHPPrefs			< uuid 29fa4718-48a3-4d7a-b201-f4ff78f81f5e
 	bool urlopen				: Allow urlopen()
 								< breakcolumn true
 								< labelwidth 300
-	bool enabledl				: Allow module loading
+	bool enabled				: Allow module loading
 								< sameline true
 	
 	integer maxtime				: Maximum script execution time
