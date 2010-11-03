@@ -48,7 +48,7 @@ class Domain:Vhost				< uuid 59417a58-d793-4ec7-a909-a9acb0236971
 								
 								< metatype derived
 								< metabase Meta:Website
-								< metadescription $?mod_php:php:$ $?mod_cgi:cgi:$ $?mod_perl:perl:$
+								< metadescription $?mod_php:php:$ $?mod_cgi:cgi:$
 								
 	string id					: Hostname-part of the site url
 								< regexp [:names:]
@@ -71,12 +71,6 @@ class Domain:Vhost				< uuid 59417a58-d793-4ec7-a909-a9acb0236971
 								< sameline true
 								< default false
 								< tooltip Select to enable the running of CGI scripts.
-								< gridwidth 12
-	
-	bool mod_perl				: Perl
-								< sameline true
-								< default false
-								< tooltip Select to enable mod_perl.
 								< gridwidth 12
 
 

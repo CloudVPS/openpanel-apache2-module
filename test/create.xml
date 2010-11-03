@@ -12,7 +12,6 @@
 				<string id="subdomain">www</string>
 				<integer id="mod_php">1</integer>
 				<integer id="mod_cgi">1</integer>
-				<integer id="mod_perl">1</integer>
 				<string id="uuid">4e52cdb7-8a29-4b43-2978-cd3676ad3f6e</string>
 				<string id="id">4e52cdb7-8a29-4b43-2978-cd3676ad3f6e</string>
 		</dict>

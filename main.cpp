@@ -411,17 +411,6 @@ bool apache2Module::writevhost 		 (value &v)
 			}
 		}
 
-		if (vhost["mod_perl"] == "true")
-		{
-			f.printf ("    <Files ~ (\\.pl$)>\n"
-					  "        SetHandler perl-script\n"
-					  "        PerlHandler ModPerl::Registry\n"
-					  "        Options ExecCGI\n"
-					  "        Allow from all\n"
-					  "        PerlSendHeader On\n"
-					  "    </Files>\n");
-		}
-
 		//
 		// Add handler types which are supported for
 		// this Virtual host

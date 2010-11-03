@@ -19,7 +19,6 @@ Requires: openpanel-mod-user
 Requires: openpanel-mod-domain
 Requires: httpd
 Requires: logax
-Requires: mod_perl
 Requires: php
 
 %description
