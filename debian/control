@@ -1,8 +1,8 @@
 Source: openpanel-mod-apache2
 Section: misc
 Priority: optional
-Maintainer: OpenPanel packager <packages@openpanel.com
-Build-Depends: debhelper (>= 5), libgrace-dev, openpanel-dev, openpanel-mkmodulexml
+Maintainer: OpenPanel packager <packages@openpanel.com>
+Build-Depends: debhelper (>= 5), libgrace-dev, openpanel-dev
 Standards-Version: 3.7.2
 
 Package: openpanel-mod-apache2
