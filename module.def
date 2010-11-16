@@ -57,10 +57,10 @@ class Domain:Vhost				< uuid 59417a58-d793-4ec7-a909-a9acb0236971
 								< metabase Meta:Website
 								< metadescription $?mod_php:php:$ $?mod_cgi:cgi:$
 								
-	string id					: Hostname-part of the site url
-								< regexp [:names:]
-								< example www.example.net
-								< tooltip The fully qualified host name part of your website url, like 'www.example.net'
+	string id					: Domain prefix
+								< regexp [:hostprefix:]
+								< example www
+								< tooltip The prefix of the host name part of your website url, like 'www' for 'www.example.com'
 								< gridwidth 62
 	
 	string admin				: Email address of site admin
