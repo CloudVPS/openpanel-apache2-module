@@ -29,10 +29,11 @@ set -e
 
 case "$1" in
     configure)
-chown opencore:authd /var/opencore/conf/staging/Apache2
-mkdir -p /etc/apache2/openpanel.d
-invoke-rc.d apache2 restart
+        chown opencore:authd /var/opencore/conf/staging/Apache2
+        mkdir -p /etc/apache2/openpanel.d
+        invoke-rc.d apache2 restart
 
+        invoke-rc.d openpanel-core reload
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
