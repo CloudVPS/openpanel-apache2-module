@@ -25,7 +25,7 @@ install-stamp: build-stamp
 	install -m 755 verify debian/openpanel-mod-apache2/var/opencore/modules/Apache2.module/verify
 	echo "# Openpanel configuration" > debian/openpanel-mod-apache2/etc/apache2/conf.d/openpanel.conf 
 	echo >> debian/openpanel-mod-apache2/etc/apache2/conf.d/openpanel.conf 
-	echo "NameVirtualHost *:80" >> debian/openpanel-mod-apache2/etc/apache2/conf.d/openpanel.conf
+	echo "#NameVirtualHost *:80" >> debian/openpanel-mod-apache2/etc/apache2/conf.d/openpanel.conf
 	echo "# Include openpanel's vhosts" >> debian/openpanel-mod-apache2/etc/apache2/conf.d/openpanel.conf 
 	echo "Include /etc/apache2/openpanel.d/*.conf" >> debian/openpanel-mod-apache2/etc/apache2/conf.d/openpanel.conf 
 	echo >> debian/openpanel-mod-apache2/etc/apache2/conf.d/openpanel.conf 
