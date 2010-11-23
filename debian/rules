@@ -39,7 +39,7 @@ install-stamp: build-stamp
 	echo '  Order allow,deny' >> debian/openpanel-mod-apache2/etc/apache2/conf.d/openpanel.conf 
 	echo '  Allow from all' >> debian/openpanel-mod-apache2/etc/apache2/conf.d/openpanel.conf 
 	echo '</Directory>' >> debian/openpanel-mod-apache2/etc/apache2/conf.d/openpanel.conf 
-	echo '<LocationMatch "^/+\$">' >> debian/openpanel-mod-apache2/etc/apache2/conf.d/openpanel.conf 
+	echo '<LocationMatch "^/+$">' >> debian/openpanel-mod-apache2/etc/apache2/conf.d/openpanel.conf 
 	echo '  Options -Indexes' >> debian/openpanel-mod-apache2/etc/apache2/conf.d/openpanel.conf 
 	echo '  ErrorDocument 403 /openpanel-template-docs/index.html' >> debian/openpanel-mod-apache2/etc/apache2/conf.d/openpanel.conf 
 	echo '</LocationMatch>' >> debian/openpanel-mod-apache2/etc/apache2/conf.d/openpanel.conf 
