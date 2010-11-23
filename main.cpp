@@ -6,7 +6,7 @@
 // Please note that use of the OpenPanel trademark may be subject to additional 
 // restrictions. For more information, please visit the Legal Information 
 // section of the OpenPanel website on http://www.openpanel.com/
-#include <moduleapp.h>
+#include <openpanel-core/moduleapp.h>
 #include "apache2Module.h"
 
 #include <grace/file.h>
@@ -207,7 +207,7 @@ bool apache2Module::writephpini (const value &data)
 	const value &o = data["System:PHPPrefs"];
 	string inifn = conf["config"]["phpini"];
 	string inipath = inifn.cutatlast ('/');
-	string tmpini = "/var/opencore/conf/staging/Apache2/%s" %format (inifn);
+	string tmpini = "/var/openpanel/conf/staging/Apache2/%s" %format (inifn);
 	
 	string in = fs.load (conf["config"]["phpini"]);
 	value lines = strutil::splitlines (in);
@@ -298,7 +298,7 @@ bool apache2Module::writeapache2conf (const value &data)
 		}
 	}
 	
-	string fnpath = "/var/opencore/conf/staging/Apache2/%s" %format (fname);
+	string fnpath = "/var/openpanel/conf/staging/Apache2/%s" %format (fname);
 	fs.save (fnpath, conflines.join ("\n"));
 
 	if (authd.installfile (fname,instpath))

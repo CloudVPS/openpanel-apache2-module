@@ -23,7 +23,7 @@ module.xml: module.def
 
 apache2module.exe: $(OBJ) module.xml
 	$(LD) $(LDFLAGS) -o apache2module.exe $(OBJ) $(LIBS) \
-	/usr/lib/opencore/libcoremodule.a
+	/usr/lib/openpanel-core/libcoremodule.a
 
 clean:
 	rm -f *.o *.exe

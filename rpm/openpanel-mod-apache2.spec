@@ -46,18 +46,18 @@ make
 %install
 BUILD_ROOT=$RPM_BUILD_ROOT
 rm -rf ${BUILD_ROOT}
-mkdir -p ${BUILD_ROOT}/var/opencore/modules/Apache2.module
-mkdir -p ${BUILD_ROOT}/var/opencore/conf/staging/Apache2
+mkdir -p ${BUILD_ROOT}/var/openpanel/modules/Apache2.module
+mkdir -p ${BUILD_ROOT}/var/openpanel/conf/staging/Apache2
 mkdir -p ${BUILD_ROOT}/etc/httpd/conf.d
 mkdir -p ${BUILD_ROOT}/var/log/httpd/openpanel/logs
-cp -rf ./apache2module.app ${BUILD_ROOT}/var/opencore/modules/Apache2.module/
-ln -sf ./apache2module.app/exec ${BUILD_ROOT}/var/opencore/modules/Apache2.module/action
-cp module.xml *.html techsupport.* ${BUILD_ROOT}/var/opencore/modules/Apache2.module/
-install -m 755 verify ${BUILD_ROOT}/var/opencore/modules/Apache2.module/verify
+cp -rf ./apache2module.app ${BUILD_ROOT}/var/openpanel/modules/Apache2.module/
+ln -sf ./apache2module.app/exec ${BUILD_ROOT}/var/openpanel/modules/Apache2.module/action
+cp module.xml *.html techsupport.* ${BUILD_ROOT}/var/openpanel/modules/Apache2.module/
+install -m 755 verify ${BUILD_ROOT}/var/openpanel/modules/Apache2.module/verify
 install -m 644 REDHAT/openpanel.conf ${BUILD_ROOT}/etc/httpd/conf.d/openpanel.conf
 
 %post
-chown opencore:authd /var/opencore/conf/staging/Apache2
+chown openpanel-core:openpanel-authd /var/openpanel/conf/staging/Apache2
 mkdir -p /etc/httpd/openpanel.d
 chkconfig --level 2345 httpd on
 rm -f /etc/httpd/conf.d/welcome.conf

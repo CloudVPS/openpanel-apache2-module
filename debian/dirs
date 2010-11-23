@@ -1,4 +1,4 @@
-var/opencore/modules/Apache2.module
+var/openpanel/modules/Apache2.module
 etc/apache2/conf.d
-var/opencore/conf/staging/Apache2
+var/openpanel/conf/staging/Apache2
 var/log/apache2/openpanel/logs
