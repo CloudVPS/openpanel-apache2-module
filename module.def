@@ -202,7 +202,7 @@ authd services
 distro debian
 	macro SERVICENAME			: apache2
 	macro CONFPATH				: /etc/apache2
-	macro PHPINIPATH			: /etc/php4/apache2
+	macro PHPINIPATH			: /etc/php5/apache2
 
 distro redhat
 	macro SERVICENAME			: httpd
