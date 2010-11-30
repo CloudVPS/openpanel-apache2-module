@@ -214,14 +214,14 @@ bool apache2Module::writephpini (const value &data)
 	foreach (line, lines)
 	{
 		#define SETBOOL(mykey,inikey) \
-			if (li.strncmp (inikey " ") == 0) { \
+			if (li.strncmp (inikey " ", inikey.strlen()+1) == 0) { \
 				if (o[mykey]) line = inikey " = On"; \
 				else line = inikey " = Off"; \
 				continue; \
 			}
 		
 		#define SETINT(mykey,inikey) \
-			if (li.strncmp (inikey " ") == 0) { \
+			if (li.strncmp (inikey " ", inikey.strlen()+1) == 0) { \
 				line = inikey " = %i" %format(o[mykey]); \
 				continue; \
 			}
