@@ -19,10 +19,10 @@ install-stamp: build-stamp
 	dh_testdir
 	dh_testroot
 	dh_installdirs
-	cp -rf ./apache2module.app debian/openpanel-mod-apache2/var/opencore/modules/Apache2.module/
-	ln -sf ./apache2module.app/exec debian/openpanel-mod-apache2/var/opencore/modules/Apache2.module/action
-	cp module.xml *.html techsupport.* debian/openpanel-mod-apache2/var/opencore/modules/Apache2.module/
-	install -m 755 verify debian/openpanel-mod-apache2/var/opencore/modules/Apache2.module/verify
+	cp -rf ./apache2module.app debian/openpanel-mod-apache2/var/openpanel/modules/Apache2.module/
+	ln -sf ./apache2module.app/exec debian/openpanel-mod-apache2/var/openpanel/modules/Apache2.module/action
+	cp module.xml *.html techsupport.* debian/openpanel-mod-apache2/var/openpanel/modules/Apache2.module/
+	install -m 755 verify debian/openpanel-mod-apache2/var/openpanel/modules/Apache2.module/verify
 	install -m 755 debian/openpanel.conf debian/openpanel-mod-apache2/etc/apache2/conf.d/openpanel.conf 
 
 binary-indep: build install
