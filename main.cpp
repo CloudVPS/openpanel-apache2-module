@@ -416,6 +416,7 @@ bool apache2Module::writevhost 		 (value &v)
 				  v["Domain"]["id"].cval());
 		
 		f.printf ("   AllowOverride      All\n");
+		f.printf ("   Allow from all\n")
 		
 		if (vhost["mod_php"] == "false")
 		{
