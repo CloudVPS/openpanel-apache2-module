@@ -228,7 +228,7 @@ bool apache2Module::writephpini (const value &data)
 
 		#define SETINTUNIT(mykey,inikey,theunit) \
 			if (li.strncmp (inikey " ", strlen(inikey)+1) == 0) { \
-				line = inikey " = %i " theunit %format(o[mykey]); \
+				line = inikey " = %i" theunit %format(o[mykey]); \
 				continue; \
 			}
 		
