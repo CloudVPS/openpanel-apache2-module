@@ -420,8 +420,21 @@ bool apache2Module::writevhost 		 (value &v)
 		
 		if (vhost["mod_php"] == "false")
 		{
-			f.printf ("       AddType text/plain .php .php3 .phtml\n");
-			f.printf ("       AddType text/plain .phps\n");
+			f.printf ("    <Files ~ \"\\.php[3456s]$\">\n");
+			f.printf ("        Order allow,deny\n");
+			f.printf ("        Deny from all\n");
+			f.printf ("        Satisfy all\n");
+			f.printf ("    </Files>\n");
+			f.printf ("    <Files ~ \"\\.phtml$\">\n");
+			f.printf ("        Order allow,deny\n");
+			f.printf ("        Deny from all\n");
+			f.printf ("        Satisfy all\n");
+			f.printf ("    </Files>\n");
+			f.printf ("    <Files ~ \"\\.inc$\">\n");
+			f.printf ("        Order allow,deny\n");
+			f.printf ("        Deny from all\n");
+			f.printf ("        Satisfy all\n");
+			f.printf ("    </Files>\n");
 		}
 		
 		if (vhost["mod_cgi"] == "true")
