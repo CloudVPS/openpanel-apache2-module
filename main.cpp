@@ -225,6 +225,12 @@ bool apache2Module::writephpini (const value &data)
 				line = inikey " = %i" %format(o[mykey]); \
 				continue; \
 			}
+
+		#define SETINTUNIT(mykey,inikey,theunit) \
+			if (li.strncmp (inikey " ", strlen(inikey)+1) == 0) { \
+				line = inikey " = %i " theunit %format(o[mykey]); \
+				continue; \
+			}
 		
 		const string &li = line.sval();
 		
@@ -237,8 +243,8 @@ bool apache2Module::writephpini (const value &data)
 		SETBOOL("urlopen","allow_url_fopen");
 		SETBOOL("enabled","enable_dl");
 		SETINT("maxtime","max_execution_time");
-		SETINT("postsize","post_max_size");
-		SETINT("memory","memory_limit");
+		SETINTUNIT("postsize","post_max_size","M");
+		SETINTUNIT("memory","memory_limit","M");
 		
 		#undef SETBOOL
 		#undef SETINT
