@@ -225,6 +225,12 @@ bool apache2Module::writephpini (const value &data)
 				line = inikey " = %i" %format(o[mykey]); \
 				continue; \
 			}
+
+		#define SETINTUNIT(mykey,inikey,theunit) \
+			if (li.strncmp (inikey " ", strlen(inikey)+1) == 0) { \
+				line = inikey " = %i" theunit %format(o[mykey]); \
+				continue; \
+			}
 		
 		const string &li = line.sval();
 		
@@ -237,8 +243,8 @@ bool apache2Module::writephpini (const value &data)
 		SETBOOL("urlopen","allow_url_fopen");
 		SETBOOL("enabled","enable_dl");
 		SETINT("maxtime","max_execution_time");
-		SETINT("postsize","post_max_size");
-		SETINT("memory","memory_limit");
+		SETINTUNIT("postsize","post_max_size","M");
+		SETINTUNIT("memory","memory_limit","M");
 		
 		#undef SETBOOL
 		#undef SETINT
@@ -416,11 +422,25 @@ bool apache2Module::writevhost 		 (value &v)
 				  v["Domain"]["id"].cval());
 		
 		f.printf ("   AllowOverride      All\n");
+		f.printf ("   Allow from all\n");
 		
 		if (vhost["mod_php"] == "false")
 		{
-			f.printf ("       AddType text/plain .php .php3 .phtml\n");
-			f.printf ("       AddType text/plain .phps\n");
+			f.printf ("    <Files ~ \"\\.php[3456s]$\">\n");
+			f.printf ("        Order allow,deny\n");
+			f.printf ("        Deny from all\n");
+			f.printf ("        Satisfy all\n");
+			f.printf ("    </Files>\n");
+			f.printf ("    <Files ~ \"\\.phtml$\">\n");
+			f.printf ("        Order allow,deny\n");
+			f.printf ("        Deny from all\n");
+			f.printf ("        Satisfy all\n");
+			f.printf ("    </Files>\n");
+			f.printf ("    <Files ~ \"\\.inc$\">\n");
+			f.printf ("        Order allow,deny\n");
+			f.printf ("        Deny from all\n");
+			f.printf ("        Satisfy all\n");
+			f.printf ("    </Files>\n");
 		}
 		
 		if (vhost["mod_cgi"] == "true")
