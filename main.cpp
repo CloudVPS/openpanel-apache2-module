@@ -431,12 +431,15 @@ bool apache2Module::writevhost 		 (value &v)
 		
 		f.printf ("   </Directory>\n");
 		
-		// Add include directive
+		// Add include directives
 		f.printf ("   Include %s/%s%s.inc/[^.#]*\n",
 				  conf["config"]["htservice:vhosts_dir"].cval(),
 				  subdom.cval(),
 				  v["Domain"]["id"].cval());
-				  
+		
+		f.printf ("   Include %s/global.inc\n",
+				  conf["config"]["htservice:vhosts_dir"].cval());
+		
 		f.printf ("</VirtualHost>\n");
 		
 		// Close file

@@ -31,6 +31,7 @@ case "$1" in
     configure)
         chown openpanel-core:openpanel-authd /var/openpanel/conf/staging/Apache2
         mkdir -p /etc/apache2/openpanel.d
+        touch /etc/apache2/openpanel.d/global.inc
         invoke-rc.d apache2 restart
 
         invoke-rc.d openpanel-core reload
