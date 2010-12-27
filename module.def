@@ -58,7 +58,7 @@ class Domain:Vhost				< uuid 59417a58-d793-4ec7-a909-a9acb0236971
 								< metadescription $?mod_php:php:$ $?mod_cgi:cgi:$
 								
 	string id					: Domain prefix
-								< regexp [:hostprefix:]
+								< regexp ^[a-zA-Z0-9.-]*$
 								< example www
 								< tooltip The prefix of the host name part of your website url, like 'www' for 'www.example.com'
 								< gridwidth 62
