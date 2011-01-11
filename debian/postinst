@@ -34,7 +34,6 @@ case "$1" in
         touch /etc/apache2/openpanel.d/global.inc
         invoke-rc.d apache2 restart
 
-        invoke-rc.d openpanel-core reload
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
