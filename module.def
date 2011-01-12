@@ -80,7 +80,56 @@ class Domain:Vhost				< uuid 59417a58-d793-4ec7-a909-a9acb0236971
 								< tooltip Select to enable the running of CGI scripts.
 								< gridwidth 12
 
+# ----------------------------------------------------------------------------
+class Domain:HTTPSVhost			< uuid 01E3D712-1E45-11E0-9A5E-BEF9DED72085
+								< version 1
+								< requires Domain
+								< indexing manual
+								< parentrealm domainsuffix
+								< uniquein class
+								< shortname httpsvhost
+								< title HTTPS Virtual Host
+								< description HTTPS Virtual host configuration
+								< explanation vhost.html
+								
+								< capabilities create update delete
+								
+								< metatype derived
+								< metabase Meta:Website
+								< metadescription $?mod_php:php:$ $?mod_cgi:cgi:$
+								
+	string id					: Domain prefix
+								< regexp ^[a-zA-Z0-9.-]*$
+								< example www
+								< tooltip The prefix of the host name part of your website url, like 'www' for 'www.example.com'
+								< gridwidth 62
+	
+	string admin				: Email address of site admin
+								< example webmaster@example.net
+								< flags enabled visible
+								< tooltip Email address for the website administrator (webmaster)
+								< gridhide true
+	
+	bool mod_php				: PHP
+								< default true
+								< tooltip Select to enable mod_php
+								< gridwidth 12
+	
+	bool mod_cgi				: CGI
+								< sameline true
+								< default false
+								< tooltip Select to enable the running of CGI scripts.
+								< gridwidth 12
+								
+	textarea pem				: Certificate for HTTPS
+								< textwidth 48
+								< rows 12
 
+	string ip					: IP address
+								< example 10.20.30.40
+								< gridwidth 38
+								< textwidth 18
+								
 # ----------------------------------------------------------------------------
 class System:ApachePrefs		< uuid ca3cd350-882e-49dc-a664-7b44e833c27e
 								< version 1
@@ -161,7 +210,6 @@ class System:PHPPrefs			< uuid 29fa4718-48a3-4d7a-b201-f4ff78f81f5e
 enum keepalive
 	value on					: On
 	value off					: Off
-
 
 # ============================================================================
 # AUTHD

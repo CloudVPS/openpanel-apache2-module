@@ -72,6 +72,8 @@ protected:
 			 //	=============================================
 	bool	 delserveralias (value &v);
 
+	void	 writewarningheader( file& f );
+
 			 //	=============================================
 			 /// Writes the atual configuration
 			 /// \param v given post data
@@ -80,11 +82,12 @@ protected:
 	bool 	 writeapache2conf (const value &v);
 	bool	 writephpini (const value &);
 	bool	 writevhost (value &);
+	bool	 writehttpsvhost (value &);
 	
 			 //  ============================================
 			 /// Delete file from the etc directory
 			 //  ============================================
-	bool	 removevhost (value &);
+	bool	 removevhost (value &, bool https=false);
 	
 	void	 getconfig (void);
 	
