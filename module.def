@@ -12,7 +12,7 @@
 module Apache2					< uuid d16089e4-3966-44c0-8b53-03e3fea129a6
 								< version 1
 								< languages en_EN
-								< apitype xml
+								< apitype grace
 								< requires User.module
 								< getconfig true
 								< license GPLv3
