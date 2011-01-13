@@ -234,6 +234,11 @@ authd fileops
 								< user root
 								< group root
 								< perms 0644
+
+	match *.pem					: /etc/%%SERVICENAME%%/openpanel.d
+								< user root
+								< group root
+								< perms 0400
 								
 	match *						: /etc/%%SERVICENAME%%/openpanel.d/*
 								< user root
