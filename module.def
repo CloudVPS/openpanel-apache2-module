@@ -127,6 +127,7 @@ class Domain:HTTPSVhost			< uuid 01E3D712-1E45-11E0-9A5E-BEF9DED72085
 
 	string ip					: IP address
 								< example 10.20.30.40
+								< flags enabled visible
 								< gridwidth 38
 								< textwidth 18
 								
