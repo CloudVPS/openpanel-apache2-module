@@ -32,6 +32,7 @@ case "$1" in
         chown openpanel-core:openpanel-authd /var/openpanel/conf/staging/Apache2
         mkdir -p /etc/apache2/openpanel.d
         touch /etc/apache2/openpanel.d/global.inc
+        a2enmod ssl
         invoke-rc.d apache2 restart
 
     ;;
