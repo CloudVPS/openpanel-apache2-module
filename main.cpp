@@ -633,16 +633,13 @@ bool apache2Module::writehttpsvhost(value &v)
 			f.printf ("<VirtualHost *:443>\n");
 		}
 		
-		f.printf ("   SSLCertificateFile    %s/%s%s.pem\n",
-				  conf["config"]["htservice:vhosts_dir"].cval(),
-				  subdom.cval(),
-				  v["Domain"]["id"].cval());
-
-		f.printf ("   SSLCertificateFile    %s/%s%s.pem\n",
-				  conf["config"]["htservice:vhosts_dir"].cval(),
-				  subdom.cval(),
-				  v["Domain"]["id"].cval());
+		f.printf ("   SSLEngine on\n");
+		f.printf ("   SSLProtocol -all +TLSv1 +SSLv3\n");
 		
+		f.printf ("   SSLCertificateFile    %s/%s%s.pem\n",
+				  conf["config"]["htservice:vhosts_dir"].cval(),
+				  subdom.cval(),
+				  v["Domain"]["id"].cval());
 		
 		if (vhost["admin"].sval().strlen()) 
 		{
@@ -685,30 +682,34 @@ bool apache2Module::writehttpsvhost(value &v)
 				  subdom.cval(),
 				  v["Domain"]["id"].cval());
 		
-		f.printf ("   AllowOverride      All\n");
-		f.printf ("   Allow from all\n");
+		f.printf ("      SSLRequireSSL\n");
+
+		f.printf ("      AllowOverride      All\n");
+		f.printf ("      Allow from all\n");
 		
 		if (vhost["mod_php"] == "false")
 		{
-			f.printf ("    <Files ~ \"\\.php[3456s]$\">\n");
-			f.printf ("        Order allow,deny\n");
-			f.printf ("        Deny from all\n");
-			f.printf ("        Satisfy all\n");
-			f.printf ("    </Files>\n");
-			f.printf ("    <Files ~ \"\\.phtml$\">\n");
-			f.printf ("        Order allow,deny\n");
-			f.printf ("        Deny from all\n");
-			f.printf ("        Satisfy all\n");
-			f.printf ("    </Files>\n");
-			f.printf ("    <Files ~ \"\\.inc$\">\n");
-			f.printf ("        Order allow,deny\n");
-			f.printf ("        Deny from all\n");
-			f.printf ("        Satisfy all\n");
-			f.printf ("    </Files>\n");
+			f.printf ("      <Files ~ \"\\.php[3456s]$\">\n");
+			f.printf ("         Order allow,deny\n");
+			f.printf ("         Deny from all\n");
+			f.printf ("         Satisfy all\n");
+			f.printf ("      </Files>\n");
+			f.printf ("      <Files ~ \"\\.phtml$\">\n");
+			f.printf ("         Order allow,deny\n");
+			f.printf ("         Deny from all\n");
+			f.printf ("         Satisfy all\n");
+			f.printf ("      </Files>\n");
+			f.printf ("      <Files ~ \"\\.inc$\">\n");
+			f.printf ("         Order allow,deny\n");
+			f.printf ("         Deny from all\n");
+			f.printf ("         Satisfy all\n");
+			f.printf ("      </Files>\n");
 		}
 		
 		if (vhost["mod_cgi"] == "true")
-			f.printf ("       AddHandler cgi-script .cgi\n");
+		{
+			f.printf ("      AddHandler cgi-script .cgi\n");
+		}
 
 		// TODO: Take a close look to disable execution of perl scripts
 		// (trac:22)
