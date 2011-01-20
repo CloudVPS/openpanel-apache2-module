@@ -8,7 +8,7 @@ License: 	GPLv3
 Group: 		Applications/Internet
 Source: 	%{name}-%{version}.tar.bz2
 Requires:	openpanel-core
-Requires: 	apache2
+Requires: 	httpd >= 2.0
 Requires: 	php >= 5.2
 Requires:	openpanel-logax
 BuildRequires:	openpanel-core-devel
