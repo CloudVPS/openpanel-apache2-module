@@ -9,7 +9,7 @@ Group: 		Applications/Internet
 Source: 	%{name}-%{version}.tar.bz2
 Requires:	openpanel-core
 Requires: 	httpd >= 2.0
-Requires: 	php >= 5.2
+Requires: 	php >= 5.1
 Requires:	openpanel-logax
 BuildRequires:	openpanel-core-devel
 BuildRequires:	grace-devel
