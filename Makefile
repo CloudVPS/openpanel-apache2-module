@@ -25,6 +25,15 @@ apache2module.exe: $(OBJ) module.xml
 	$(LD) $(LDFLAGS) -o apache2module.exe $(OBJ) $(LIBS) \
 	/usr/lib/openpanel-core/libcoremodule.a
 
+install:
+	mkdir -p ${DESTDIR}/var/openpanel/modules/Apache2.module
+	mkdir -p ${DESTDIR}/var/openpanel/conf/staging/Apache2
+	cp -rf ./apache2module.app    ${DESTDIR}/var/openpanel/modules/Apache2.module/
+	ln -sf apache2module.app/exec ${DESTDIR}/var/openpanel/modules/Apache2.module/action
+	cp     module.xml          ${DESTDIR}/var/openpanel/modules/Apache2.module/module.xml
+	install -m 755 verify      ${DESTDIR}/var/openpanel/modules/Apache2.module/verify
+	cp *.html techsupport.* ${DESTDIR}/var/openpanel/modules/Apache2.module
+
 clean:
 	rm -f *.o *.exe
 	rm -rf apache2module.app
