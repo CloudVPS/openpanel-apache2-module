@@ -44,7 +44,7 @@ rm -rf $RPM_BUILD_ROOT
 %config %attr(0644,root,root) %{_sysconfdir}/httpd/conf.d/openpanel.conf
 %dir %attr(0755,root,root) %{_sysconfdir}/httpd/openpanel.d/
 %dir %attr(0755,root,root) %{_localstatedir}/log/httpd/openpanel/
-%{_localstatedir}/openpanel/modules/%{modname}.module
+%attr(-,openpanel-core, openpanel-authd)%{_localstatedir}/openpanel/modules/%{modname}.module
 
 %post
 /sbin/service openpaneld condrestart /dev/null 2>&1
