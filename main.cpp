@@ -441,7 +441,7 @@ bool apache2Module::writevhost 		 (value &v)
 				      subdom.cval(),
 				      aliasdoms["id"].cval());
 			
-			if (subdom == "www")
+			if (subdom == "www.")
 			{
 				f.printf ("   ServerAlias        %s\n", aliasdoms["id"].cval());
 			}
