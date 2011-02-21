@@ -43,10 +43,6 @@ int apache2Module::main (void)
 	{
 	    subdom = data["Domain:Vhost"]["id"];
 	}
-	else if (data["Domain:HTTPSVhost"])
-	{
-	    subdom = data["Domain:HTTPSVhost"]["id"];
-	}
 
 	string pdom = data["Domain"]["id"];
 	subdom = subdom.left(subdom.strlen() - pdom.strlen() - 1);
@@ -82,7 +78,7 @@ int apache2Module::main (void)
 			}
 			break;
 		
-		incaseof ("Domain:HTTPSVhost") :
+		incaseof ("Domain:HTTPS") :
 			caseselector (command)
 			{
 				incaseof ("create") :
@@ -589,8 +585,8 @@ bool apache2Module::writehttpsvhost(value &v)
 	//
 	// Write the config files for all vhosts given
 	//
-	value vhost;
-	vhost = v["Domain:HTTPSVhost"];
+	value vhost = v["Domain:Vhost"];
+	value https = v["Domain:HTTPS"];
 
 	string 	fname;	
 	file	f;
@@ -608,7 +604,7 @@ bool apache2Module::writehttpsvhost(value &v)
 		return false;
 	}
 	
-	string pem = vhost["pem"].sval();
+	string pem = https["pem"].sval();
 	if (pem.strstr("-----BEGIN CERTIFICATE-----") == -1 ||
 		pem.strstr("-----END CERTIFICATE-----") == -1)
 	{
@@ -641,7 +637,7 @@ bool apache2Module::writehttpsvhost(value &v)
 	
 		if (vhost["ip"].sval().strlen() )
 		{
-			f.printf ("<VirtualHost %s:443>\n", vhost["ip"].sval().cval());
+			f.printf ("<VirtualHost %s:443>\n", https["ip"].sval().cval());
 		}
 		else
 		{
@@ -859,7 +855,7 @@ bool apache2Module::writehttpsvhost(value &v)
 bool apache2Module::removevhost (value &v, bool https)
 {
 
-	foreach (vhost, v[https?"Domain:HTTPSVhost":"Domain:Vhost"])
+	foreach (vhost, v["Domain:Vhost"])
 	{
 		string 	fname;	
 
@@ -1033,20 +1029,17 @@ bool apache2Module::checkconfig (value &v)
 						"Context body does not exists");	
 			return false;
 
-		incaseof ("Domain:HTTPSVhost") :
-			if (v.exists("Domain"))
+		incaseof ("Domain:HTTPS") :
+			if (v.exists("Domain") && v.exists("Domain:Vhost") && v.exists("Domain:HTTPS"))
 			{
-				if (v.exists("Domain:HTTPSVhost"))
+				string username = v["Domain:Vhost"]("owner");
+				if (! username)
 				{
-					string username = v["Domain:HTTPSVhost"]("owner");
-					if (! username)
-					{
-						sendresult (moderr::err_value, "Object has no owner");
-						return false;
-					}
-					// TODO: check certificate validity
-					return true;
+					sendresult (moderr::err_value, "Object has no owner");
+					return false;
 				}
+				// TODO: check certificate validity
+				return true;
 			}
 			sendresult (moderr::err_context, 
 						"Context body does not exists");	

@@ -81,45 +81,17 @@ class Domain:Vhost				< uuid 59417a58-d793-4ec7-a909-a9acb0236971
 								< gridwidth 12
 
 # ----------------------------------------------------------------------------
-class Domain:HTTPSVhost			< uuid 01E3D712-1E45-11E0-9A5E-BEF9DED72085
+class Domain:HTTPS				< uuid 01E3D712-1E45-11E0-9A5E-BEF9DED72045
 								< version 1
-								< requires Domain
+								< requires Domain:Vhost
 								< indexing manual
-								< parentrealm domainsuffix
-								< uniquein class
-								< shortname httpsvhost
+								< uniquein parent
+								< singleton https
+								< shortname https
 								< title HTTPS Virtual Host
 								< description HTTPS Virtual host configuration
-								< explanation vhost.html
 								
 								< capabilities create update delete
-								
-								< metatype derived
-								< metabase Meta:Website
-								< metadescription $?mod_php:php:$ $?mod_cgi:cgi:$
-								
-	string id					: Domain prefix
-								< regexp ^[a-zA-Z0-9.-]*$
-								< example www
-								< tooltip The prefix of the host name part of your website url, like 'www' for 'www.example.com'
-								< gridwidth 62
-	
-	string admin				: Email address of site admin
-								< example webmaster@example.net
-								< flags enabled visible
-								< tooltip Email address for the website administrator (webmaster)
-								< gridhide true
-	
-	bool mod_php				: PHP
-								< default true
-								< tooltip Select to enable mod_php
-								< gridwidth 12
-	
-	bool mod_cgi				: CGI
-								< sameline true
-								< default false
-								< tooltip Select to enable the running of CGI scripts.
-								< gridwidth 12
 								
 	textarea pem				: Certificate for HTTPS
 								< textwidth 48
