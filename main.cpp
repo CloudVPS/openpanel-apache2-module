@@ -635,7 +635,7 @@ bool apache2Module::writehttpsvhost(value &v)
 		
 	    writewarningheader( f );
 	
-		if (vhost["ip"].sval().strlen() )
+		if (https["ip"].sval().strlen() )
 		{
 			f.printf ("<VirtualHost %s:443>\n", https["ip"].sval().cval());
 		}
