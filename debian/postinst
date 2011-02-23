@@ -34,7 +34,17 @@ case "$1" in
         touch /etc/apache2/openpanel.d/global.inc
         a2enmod ssl
         invoke-rc.d apache2 restart
-
+        
+        # Convert all httpsvhost objects to vhost object with a htttps object
+        # While it is safe to do this conversion more than once, it't better
+        # not to rely on that.
+        if dpkg --compare-versions "$2" lt "1.1.0"; then 
+            TASKFILE="/var/openpanel/taskqueue/50_upgrade_mod_apache2_10_to_11.sh"
+            echo "#!/bin/sh" > $TASKFILE
+            echo 'echo "$(date) Converting 1.0 https to 1.1" >> /var/openpanel/log/openpanel-mod-apache2.log' >> $TASKFILE
+            echo "/usr/bin/sqlite3 /var/openpanel/db/panel/panel.db < /var/openpanel/modules/Apache2.module/upgrade10to11.sql 2>&1 >> /var/openpanel/log/openpanel-mod-apache2.log" >> $TASKFILE
+            chmod 700 "$TASKFILE"
+        fi
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
