@@ -1,4 +1,8 @@
 
+-- Nu huries, we can wait just fine
+.timeout 2000
+
+
 -- Generate new https objects, parented to the httpsvhost objects already in the DB
 INSERT INTO Objects (uuid,metaid,parent,owner,uniquecontext,class,content)
 SELECT 
