@@ -38,7 +38,7 @@ case "$1" in
         # Convert all httpsvhost objects to vhost object with a htttps object
         # While it is safe to do this conversion more than once, it't better
         # not to rely on that.
-        if dpkg --compare-versions "$2" lt "1.1.0"; then 
+        if dpkg --compare-versions "$2" lt "1.0.4"; then 
             TASKFILE="/var/openpanel/taskqueue/50_upgrade_mod_apache2_10_to_11.sh"
             echo "#!/bin/sh" > $TASKFILE
             echo 'echo "$(date) Converting 1.0 https to 1.1" >> /var/openpanel/log/openpanel-mod-apache2.log' >> $TASKFILE
