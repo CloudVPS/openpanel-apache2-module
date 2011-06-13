@@ -33,6 +33,8 @@ install:
 	cp     module.xml          ${DESTDIR}/var/openpanel/modules/Apache2.module/module.xml
 	install -m 755 verify      ${DESTDIR}/var/openpanel/modules/Apache2.module/verify
 	cp *.html techsupport.* ${DESTDIR}/var/openpanel/modules/Apache2.module
+	mkdir -p ${DESTDIR}/var/openpanel/modules/Apache2.module/tests
+	cp     tests/test.py          ${DESTDIR}/var/openpanel/modules/Apache2.module/tests/
 
 clean:
 	rm -f *.o *.exe

@@ -11,6 +11,7 @@
 
 #include <grace/file.h>
 #include <grace/filesystem.h>
+#include <grace/process.h>
 
 
 APPOBJECT(apache2Module);
@@ -769,11 +770,27 @@ bool apache2Module::writehttpsvhost(value &v)
 					  certname.cval());
 		
 		f.openwrite(certpath);
-	    writewarningheader( f );
+		fs.chmod( certpath, 0400 );
+	    	writewarningheader( f );
 		f.puts( pem );
 		f.close();
 		
-		fs.chmod( certname, 0400 );
+		value cmdLine;
+		cmdLine[0] = "/var/openpanel/modules/Apache2.module/validatepem.py";
+		cmdLine[1] = certpath;
+
+		systemprocess proc (cmdLine);
+		proc.run();
+		proc.close();
+		proc.serialize();
+
+		if (proc.retval())
+		{
+			authd.rollback ();
+			sendresult (moderr::err_value, "Invalid PEM data");
+
+			return false;
+		}
 
 		if( authd.installfile (certname, conf["config"]["htservice:vhosts_dir"]))
 		{
