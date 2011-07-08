@@ -2,12 +2,12 @@ Source: openpanel-mod-apache2
 Section: misc
 Priority: optional
 Maintainer: OpenPanel packager <packages@openpanel.com>
-Build-Depends: debhelper (>= 5), libgrace-dev, openpanel-dev
+Build-Depends: debhelper (>= 5), libgrace-dev (>= 1.0), openpanel-dev (>= 1.1)
 Standards-Version: 3.7.2
 
 Package: openpanel-mod-apache2
 Architecture: any
 Pre-Depends: openpanel-core, openpanel-authd, sqlite3, ssl-cert
-Depends: openpanel-core (>= 0.8.3), openpanel-mod-user, openpanel-mod-domain, apache2, logax, libapache2-mod-php5 | php5-cgi, ${shlibs:Depends}, ${misc:Depends}
+Depends: openpanel-core (>= 1.1), openpanel-mod-user (>= 1.1), openpanel-mod-domain (>= 1.1), apache2, logax, libapache2-mod-php5 | php5-cgi, ${shlibs:Depends}, ${misc:Depends}
 Description: OpenPanel module to configure the apache2 webserver
  OpenPanel module to configure the apache2 webserver
