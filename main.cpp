@@ -776,7 +776,7 @@ bool apache2Module::writehttpsvhost(value &v)
 		f.close();
 		
 		value cmdLine;
-		cmdLine[0] = "/var/openpanel/tools/validatepem.py";
+		cmdLine[0] = "/var/openpanel/bin/validatepem.py";
 		cmdLine[1] = certpath;
 
 		systemprocess proc (cmdLine);
