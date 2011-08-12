@@ -23,7 +23,6 @@ install-stamp: build-stamp
 	ln -sf ./apache2module.app/exec debian/openpanel-mod-apache2/var/openpanel/modules/Apache2.module/action
 	cp module.xml *.html techsupport.* debian/openpanel-mod-apache2/var/openpanel/modules/Apache2.module/
 	install -m 755 verify debian/openpanel-mod-apache2/var/openpanel/modules/Apache2.module/verify
-	install -m 755 validatepem.py debian/openpanel-mod-apache2/var/openpanel/modules/Apache2.module/validatepem.py
 	install -m 755 debian/openpanel.conf debian/openpanel-mod-apache2/etc/apache2/conf.d/openpanel.conf 
 	install -m 755 debian/upgrade10to11.sql debian/openpanel-mod-apache2/var/openpanel/modules/Apache2.module/upgrade10to11.sql
 	mkdir -p debian/openpanel-mod-apache2/var/openpanel/modules/Apache2.module/tests
