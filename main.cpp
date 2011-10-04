@@ -769,8 +769,9 @@ bool apache2Module::writehttpsvhost(value &v)
 					  conf["config"]["varpath"].cval(),
 					  certname.cval());
 		
-		f.openwrite(certpath);
-		fs.chmod( certpath, 0400 );
+		fs.chmod (certpath, 0600);
+		f.openwrite (certpath);
+		fs.chmod (certpath, 0400);
 	    	writewarningheader( f );
 		f.puts( pem );
 		f.close();
