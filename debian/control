@@ -8,6 +8,10 @@ Standards-Version: 3.7.2
 Package: openpanel-mod-apache2
 Architecture: any
 Pre-Depends: openpanel-core, openpanel-authd, sqlite3, ssl-cert
-Depends: openpanel-core (>= 1.1), openpanel-mod-user (>= 1.1), openpanel-mod-domain (>= 1.1), apache2, logax, libapache2-mod-php5 | php5-cgi, ${shlibs:Depends}, ${misc:Depends}, openpanel-validatepem
+Depends: 
+    openpanel-core (>= 1.1), openpanel-mod-user (>= 1.1), openpanel-mod-domain (>= 1.1), openpanel-validatepem 
+    apache2, logax, libapache2-mod-php5 | php5-cgi, 
+    ${shlibs:Depends}, ${misc:Depends}
+Recommends: php5-mysql
 Description: OpenPanel module to configure the apache2 webserver
  OpenPanel module to configure the apache2 webserver
