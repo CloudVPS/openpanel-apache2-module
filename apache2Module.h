@@ -39,6 +39,7 @@ public:
 protected:
 
 	appconfig		conf;			///< Modules configuration data
+	int				port;			///< The apache port
 	
 			 //	 =============================================
 			 /// Configuration handler 
