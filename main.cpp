@@ -606,20 +606,7 @@ bool apache2Module::writehttpsvhost(value &v)
 	}
 	
 	string pem = https["pem"].sval();
-	if (pem.strstr("-----BEGIN CERTIFICATE-----") == -1 ||
-		pem.strstr("-----END CERTIFICATE-----") == -1)
-	{
-		sendresult (moderr::err_value, "PEM doesn't contain a certificate");
-		return false;	
-	}
-	
-	if (pem.strstr("-----BEGIN RSA PRIVATE KEY-----") == -1 ||
-		pem.strstr("-----END RSA PRIVATE KEY-----") == -1)
-	{
-		sendresult (moderr::err_value, "PEM doesn't contain a private key");
-		return false;	
-	}
-		
+
 	value pw = kernel.userdb.getpwnam (username);
 	if (! pw)
 	{
